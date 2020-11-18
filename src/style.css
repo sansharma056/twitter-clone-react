@@ -1,0 +1,224 @@
+@import "normalize.css";
+
+html {
+  box-sizing: border-box;
+  font-size: 15px;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+html,
+body,
+#react-root {
+  height: 100%;
+}
+body {
+  background: #15202b;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-y: scroll;
+}
+.splash-icon {
+  align-self: center;
+  color: #1da1f2;
+  height: 70px;
+  width: 70px;
+}
+.row {
+  display: flex;
+  flex-flow: row wrap;
+}
+.col {
+  display: flex;
+  flex-flow: column nowrap;
+}
+main {
+  height: 100vh;
+}
+.col-1-2 {
+  flex: 0 0 100%;
+  padding: 15px;
+}
+.col-1-2-l {
+  order: 1;
+  background: #1da1f2;
+}
+.benefits-panel {
+  max-width: 380px;
+}
+.benefits-panel ul {
+  padding: 0px;
+  list-style-type: none;
+}
+.benefits-panel ul li {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+  font-size: 23px;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+.benefits-panel li svg {
+  fill: white;
+  margin-right: 15px;
+  width: 27.5px;
+  height: 27.5px;
+}
+.benefits-panel p {
+  margin: 0;
+}
+.auth-option-panel {
+  max-width: 380px;
+  flex: 0 0 auto;
+}
+.auth-option-panel .fa-twitter {
+  height: 40px;
+  width: 40px;
+}
+.auth-option-panel .heading {
+  overflow-wrap: break-word;
+  margin-top: 20px;
+}
+.auth-option-panel p {
+  margin-top: 59px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.auth-option-panel .btn {
+  margin-bottom: 15px;
+}
+.mini-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 15px;
+  left: 0px;
+  padding: 0px 15px;
+}
+.mini-login .input-group {
+  flex: 0 0 33%;
+  margin-right: 10px;
+  align-self: center;
+}
+.login-form {
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+.login-form h1 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 25px;
+}
+.login-form .input-group {
+  margin-bottom: 2rem;
+}
+.input-group {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  max-width: 300px;
+  background: #192734;
+  border-radius: 2px;
+}
+.input-group label {
+  display: inline-block;
+  color: #8899a6;
+  padding-top: 5px;
+  padding-left: 10px;
+  font-size: 15px;
+  text-overflow: ellipsis;
+}
+.input-group label:focus-within {
+  color: #1da1f2;
+}
+.input-group input {
+  background-color: inherit;
+  width: 100%;
+  caret-color: #fff;
+  color: #fff;
+  border: none;
+  border-bottom: 2px solid #8899a6;
+  padding: 2px 10px 5px 10px;
+}
+.input-group input:focus {
+  outline: none;
+  border-color: #1da1f2;
+}
+.btn {
+  color: #1da1f2;
+  text-decoration: none;
+  border: 1px solid #1da1f2;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 9999px;
+  min-height: 40px;
+  font-weight: 700;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.btn:hover {
+  background-color: rgba(29, 161, 242, 0.1);
+}
+.btn:visited {
+  text-decoration: none;
+}
+.btn-blue {
+  background-color: #1da1f2;
+  color: white;
+}
+.btn-blue:hover {
+  background-color: #1a91da;
+}
+footer {
+  display: flex;
+  color: #8899a6;
+  justify-content: center;
+  height: 5vh;
+}
+footer a,
+footer a:visited {
+  color: #8899a6;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+/*Utility Classes*/
+.mb-15 {
+  margin-bottom: 15px;
+}
+.p-r {
+  position: relative;
+}
+.jc-sb {
+  justify-content: space-between;
+}
+.jc-c {
+  justify-content: center;
+}
+.as-c {
+  align-self: center;
+}
+.full-height {
+  height: 100%;
+}
+/*Media Queries*/
+@media screen and (max-width: 1000px), screen and (max-height: 660px) {
+  .mini-login {
+    display: none;
+  }
+}
+@media screen and (min-width: 800px) {
+  [class*="col-1-2-"] {
+    flex: 0 0 50%;
+    order: 0;
+  }
+}
