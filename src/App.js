@@ -1,15 +1,18 @@
 import React from "react";
 import { render } from "react-dom";
+import { Router } from "@reach/router";
 
-import Main from "./Main";
-import Footer from "./Footer";
+import Home from "./Home";
+import Login from "./Login";
+import Signup from "./Signup";
 
 const App = () => {
   return (
-    <>
-      <Main />
-      <Footer />
-    </>
+    <Router className="home">
+      <Home path="/" />
+      <Login path="login" />
+      <Signup path="signup" />
+    </Router>
   );
 };
 
