@@ -60,7 +60,7 @@ const Main = () => {
 
           <p>Join Twitter today.</p>
 
-          <Link to="" className="btn btn-blue">
+          <Link to="signup" className="btn btn--blue">
             Sign up
           </Link>
           <Link to="login" className="btn">

@@ -15,7 +15,7 @@ const MiniLogin = () => {
   };
 
   return (
-    <form className="mini-login" onSubmit={handleForm}>
+    <form className="mini-login" onSubmit={handleForm} noValidate>
       <Input
         type="email"
         labelName="Email"
