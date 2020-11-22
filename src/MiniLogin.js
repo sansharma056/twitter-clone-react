@@ -19,13 +19,13 @@ const MiniLogin = () => {
       <Input
         type="email"
         labelName="Email"
-        value={email.value}
+        value={email.state}
         onChange={email.onChange}
       />
       <Input
         type="password"
         labelName="Password"
-        value={password.value}
+        value={password.state}
         onChange={password.onChange}
       />
       <button type="submit" className="btn" to="/">
