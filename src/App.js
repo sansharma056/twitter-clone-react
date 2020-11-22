@@ -8,7 +8,7 @@ import Signup from "./Signup";
 
 const App = () => {
   return (
-    <Router className="home">
+    <Router>
       <Home path="/" />
       <Login path="login" />
       <Signup path="signup" />
