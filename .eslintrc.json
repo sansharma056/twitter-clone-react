@@ -12,6 +12,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-console": "warn"
   },
+  "parser": "babel-eslint",
   "plugins": ["react", "import", "react-hooks"],
   "parserOptions": {
     "ecmaVersion": 2018,
