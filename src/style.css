@@ -11,8 +11,7 @@ html {
 }
 html,
 body,
-#react-root,
-.home {
+#react-root {
   height: 100%;
 }
 body {
@@ -21,9 +20,25 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow-y: scroll;
 }
+#modal:empty {
+  display: none;
+}
+#modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(110, 118, 125, 0.4);
+}
 #react-root,
 .home {
   display: flex;
+  height: 100vh;
   flex-flow: column nowrap;
 }
 .splash-icon {
@@ -93,6 +108,7 @@ main {
   font-weight: 700;
 }
 .auth-option-panel .btn {
+  width: 100%;
   margin-bottom: 15px;
 }
 .mini-login {
@@ -143,6 +159,47 @@ main {
 .login-form .btn {
   min-height: 47px;
 }
+.signup-form {
+  background-color: #15202b;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  min-width: 600px;
+  min-height: 400px;
+  height: 450px;
+  max-width: 80vw;
+  max-height: 90vh;
+  border-radius: 20px;
+}
+.signup-form .btn {
+  min-height: 30px;
+}
+.signup-header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 53px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.signup-form svg {
+  min-width: 30px;
+  height: 1.75rem;
+}
+.signup-form-steps {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.signup-form h1 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 23px;
+  font-weight: 700;
+}
+.signup-form .input-group {
+  max-width: none;
+  margin-bottom: 2rem;
+}
 .input-group {
   display: flex;
   flex-flow: column nowrap;
@@ -173,12 +230,14 @@ main {
 }
 .input-group input:invalid {
   box-shadow: none;
+  border-color: #e0245e;
 }
 .input-group input:focus {
   outline: none;
   border-color: #1da1f2;
 }
 .btn {
+  cursor: pointer;
   background-color: #15202b;
   color: #1da1f2;
   text-decoration: none;
@@ -221,6 +280,19 @@ main {
   background-color: #19618f;
   color: #4f7792;
 }
+.btn--icon {
+  padding: 0;
+  border: 0;
+  fill: #1da1f2;
+}
+.btn--back:hover,
+.btn--bacl:focus {
+  background-color: rgba(29, 161, 242, 0.1);
+}
+.btn-wrapper {
+  display: flex;
+  flex-basis: 50%;
+}
 footer {
   display: flex;
   color: #8899a6;
@@ -250,6 +322,9 @@ footer a:focus {
 .jc-c {
   justify-content: center;
 }
+.jc-fe {
+  justify-content: flex-end;
+}
 .as-c {
   align-self: center;
 }
@@ -266,5 +341,13 @@ footer a:focus {
   [class*="col-1-2-"] {
     flex: 0 0 50%;
     order: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .signup-form {
+    min-width: unset;
+    width: 100%;
+    overflow-y: scroll;
   }
 }
