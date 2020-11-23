@@ -2,8 +2,13 @@ import React from "react";
 import { TwitterLogo } from "./Icons";
 import Input from "./Input";
 import useInput from "./useInput";
+import Modal from "./Modal";
+import useModal from "./useModal";
+import Signup from "./Signup";
 
 const Login = () => {
+  const { isModalVisible, toggleModal } = useModal(false);
+
   const email = useInput("");
   const password = useInput("");
 
@@ -42,6 +47,12 @@ const Login = () => {
         >
           Log in
         </button>
+        <a onClick={toggleModal}>Sign up for Twitter Clone</a>
+        {isModalVisible ? (
+          <Modal>
+            <Signup onClick={toggleModal} />
+          </Modal>
+        ) : null}
       </form>
     </div>
   );

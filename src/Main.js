@@ -3,15 +3,11 @@ import { Link } from "@reach/router";
 import MiniLogin from "./MiniLogin";
 import { CommentIcon, SearchIcon, TwitterLogo, UserFriendsIcon } from "./Icons";
 import Modal from "./Modal";
+import useModal from "./useModal";
 import Signup from "./Signup";
 
 const Main = () => {
-  const [showModal, updateShowModal] = useState(false);
-
-  function toggleModal() {
-    updateShowModal(!showModal);
-  }
-
+  const { isModalVisible, toggleModal } = useModal(false);
   return (
     <main className="row">
       <div className="col-1-2 col-1-2-l col jc-c">
@@ -49,7 +45,7 @@ const Main = () => {
           <Link to="login" className="btn">
             Log in
           </Link>
-          {showModal ? (
+          {isModalVisible ? (
             <Modal>
               <Signup onClick={toggleModal} />
             </Modal>
