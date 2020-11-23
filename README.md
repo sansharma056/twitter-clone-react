@@ -12,3 +12,7 @@ My goal is to finish this project by december but judging by my progress so far,
 ## Login
 
 ![Screenshot_2020-11-20 Twitter Clone(1)](https://user-images.githubusercontent.com/41210361/99719087-dda45d00-2ad1-11eb-8fca-04cfe4fa57e9.png)
+
+## Signup
+
+![Screenshot_2020-11-23 Twitter Clone](https://user-images.githubusercontent.com/41210361/99989729-fca83500-2dd8-11eb-98ae-0e6cfb25998b.png)
