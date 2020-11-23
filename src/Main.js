@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "@reach/router";
 import MiniLogin from "./MiniLogin";
 import { CommentIcon, SearchIcon, TwitterLogo, UserFriendsIcon } from "./Icons";
@@ -8,6 +8,11 @@ import Signup from "./Signup";
 
 const Main = () => {
   const { isModalVisible, toggleModal } = useModal(false);
+
+  useEffect(() => {
+    document.title = "Twitter Clone";
+  });
+
   return (
     <main className="row">
       <div className="col-1-2 col-1-2-l col jc-c">

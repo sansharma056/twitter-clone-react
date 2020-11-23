@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "./Input";
 import useInput from "./useInput";
 import { BackIcon, TwitterLogo } from "./Icons";
@@ -70,6 +70,10 @@ const Signup = ({ onClick: toggleModal }) => {
         );
     }
   }
+
+  useEffect(() => {
+    document.title = "Sign up / Twitter Clone";
+  });
 
   return (
     <div className="signup-form">

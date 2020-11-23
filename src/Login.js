@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TwitterLogo } from "./Icons";
 import Input from "./Input";
 import useInput from "./useInput";
@@ -20,6 +20,10 @@ const Login = () => {
     console.log(email.state, password.state);
     document.getElementsByTagName("button").disabled = "true";
   };
+
+  useEffect(() => {
+    document.title = "Login / Twitter Clone";
+  }, []);
 
   return (
     <div className="login-form-wrapper">
