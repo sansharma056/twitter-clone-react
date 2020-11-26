@@ -366,12 +366,14 @@ main {
   cursor: pointer;
 }
 .user-card,
-.who-to-follow-footer {
+.who-to-follow-footer,
+.tweet {
   transition-duration: 0.2s;
   transition-property: background;
 }
 .user-card:hover,
-.who-to-follow-footer:hover {
+.who-to-follow-footer:hover,
+.tweet:hover {
   background: rgb(255, 255, 255, 0.03);
 }
 .user-card-c {
@@ -422,7 +424,7 @@ main {
 }
 .btn {
   cursor: pointer;
-  background-color: #15202b;
+  background: inherit;
   color: #1da1f2;
   text-decoration: none;
   border: 1px solid #1da1f2;
