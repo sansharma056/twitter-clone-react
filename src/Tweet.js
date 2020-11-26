@@ -3,7 +3,8 @@ import { Link } from "@reach/router";
 import Avatar from "./Avatar";
 import { CommentIcon, HeartIcon, RetweetIcon, DeleteIcon } from "./Icons";
 
-const Tweet = ({ avatarURL, name, handle, timestamp, content, imageURL }) => {
+const Tweet = ({ tweetData }) => {
+  const { avatarURL, name, handle, timestamp, content, imageURL } = tweetData;
   return (
     <div className="tweet">
       <div className="tweet-l">
