@@ -222,14 +222,17 @@ main {
   flex-basis: 100%;
   padding-bottom: 10px;
 }
-.tweet-author a {
+.tweet-author a,
+.user-card a {
   text-decoration: none;
 }
-.tweet-author-name {
+.tweet-author-name,
+.user-card-name {
   color: #fff;
   font-weight: 700;
 }
-.tweet-author-name:hover {
+.tweet-author-name:hover,
+.user-card-name:hover {
   text-decoration: underline;
 }
 .tweet-author-handle {
@@ -319,6 +322,67 @@ main {
 }
 .new-tweet-footer > .btn {
   margin-top: 10px;
+}
+.who-to-follow {
+  display: flex;
+  flex-flow: column nowrap;
+  background: #192734;
+  border-radius: 16px;
+  width: 350px;
+}
+.who-to-follow-header {
+  padding: 10px 15px;
+  border-bottom: 1px solid #38444d;
+}
+.who-to-follow-header h2 {
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
+}
+.who-to-follow-content {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.who-to-follow-footer {
+  padding: 15px 15px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.who-to-follow-footer:hover {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.who-to-follow-footer a {
+  text-decoration: none;
+  color: #1da1f2;
+}
+.user-card {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #38444d;
+  cursor: pointer;
+}
+.user-card,
+.who-to-follow-footer {
+  transition-duration: 0.2s;
+  transition-property: background;
+}
+.user-card:hover,
+.who-to-follow-footer:hover {
+  background: rgb(255, 255, 255, 0.03);
+}
+.user-card-c {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.user-card-handle {
+  color: #8899a6;
+}
+.user-card-r .btn {
+  background: #192734;
 }
 .input-group {
   display: flex;
