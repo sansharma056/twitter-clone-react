@@ -386,6 +386,51 @@ main {
 .user-card-r .btn {
   background: #192734;
 }
+nav {
+  width: 243px;
+}
+nav ul {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+nav li {
+  border-radius: 9999px;
+  transition-duration: 0.2s;
+  transition-property: background;
+}
+nav li:hover {
+  background: rgb(29, 161, 242, 0.1);
+}
+nav li:hover a,
+.active {
+  color: #1da1f2;
+}
+nav li:hover svg,
+.active svg {
+  fill: #1da1f2;
+}
+nav li a {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+nav svg {
+  height: 1.75em;
+  fill: #fff;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+}
+nav a span {
+  margin: 0px 15px 0px 20px;
+  font-weight: 700;
+  font-size: 19px;
+}
 .input-group {
   display: flex;
   flex-flow: column nowrap;
