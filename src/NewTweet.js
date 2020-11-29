@@ -12,7 +12,7 @@ const NewTweet = ({ avatarURL }) => {
   }
 
   return (
-    <div className="new-tweet as-c">
+    <div className="new-tweet">
       <div className="new-tweet-l">
         <Avatar src={avatarURL} />
       </div>
