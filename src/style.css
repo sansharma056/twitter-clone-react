@@ -19,6 +19,7 @@ body {
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow-y: scroll;
+  scrollbar-color: rgb(107, 125, 140) rgb(25, 39, 52);
 }
 #modal:empty {
   display: none;
@@ -54,6 +55,55 @@ body {
 .col {
   display: flex;
   flex-flow: column nowrap;
+}
+.main-screen {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.main-screen-sidebar {
+  display: flex;
+  flex: 0 0 30%;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+}
+.main-screen-sidebar svg {
+  height: 2rem;
+  width: 1.5rem;
+}
+.main-screen-content {
+  display: flex;
+  flex: 0 0 600px;
+}
+.main-screen-content > div:first-child {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-color: #38444d;
+}
+.user-home {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.user-home-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: #38444d;
+  padding: 0px 15px;
+  height: 53px;
+}
+.user-home h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
 }
 main {
   flex: 1 1 0%;
@@ -268,7 +318,7 @@ main {
 .new-tweet {
   display: flex;
   flex-flow: row nowrap;
-  padding: 5px 15px;
+  padding: 10px 15px;
 }
 .new-tweet-l {
   flex-basis: 49px;
@@ -297,6 +347,10 @@ main {
   resize: none;
   overflow-y: scroll;
 }
+.new-tweet-editor textarea:focus {
+  outline: none;
+  border-bottom: 1px solid #38444d;
+}
 .new-tweet-editor textarea::placeholder {
   color: #8899a6;
 }
@@ -306,7 +360,6 @@ main {
   align-items: center;
   justify-content: space-between;
   height: 49px;
-  border-top: 1px solid #38444d;
 }
 .new-tweet svg {
   height: 1.5em;
@@ -477,6 +530,7 @@ nav a span {
   padding-right: 1em;
   border-radius: 9999px;
   min-height: 40px;
+  min-width: 40px;
   font-weight: 700;
   display: flex;
   flex-flow: column;
@@ -529,6 +583,12 @@ nav a span {
 .btn-wrapper {
   display: flex;
   flex-basis: 50%;
+}
+.seperator {
+  height: 10px;
+  border-top: 1px solid #38444d;
+  border-bottom: 1px solid #38444d;
+  background: #192734;
 }
 footer {
   display: flex;
