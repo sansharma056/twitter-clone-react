@@ -5,6 +5,7 @@ import { Router } from "@reach/router";
 import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
+import MainScreen from "./MainScreen";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Home path="/" />
       <Login path="login" />
       <Signup path="signup" />
+      <MainScreen path="/*" />
     </Router>
   );
 };
