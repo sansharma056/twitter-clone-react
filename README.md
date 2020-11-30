@@ -3,6 +3,10 @@
 I plan on creating a Twitter clone from scratch using React and Node.js
 My goal is to finish this project by december but judging by my progress so far, it's going to take a while.
 
+# Updates
+
+**2020/12/01:** Just as I predicted this project is still in works. I do believe that I'll complete frontend part of this project in the coming week.
+
 # Screenshots
 
 ## Home
