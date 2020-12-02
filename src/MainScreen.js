@@ -5,6 +5,7 @@ import Nav from "./Nav";
 import WhoToFollow from "./WhoToFollow";
 import { TwitterLogo } from "./Icons";
 import Explore from "./Explore";
+import Profile from "./Profile";
 
 const MainScreen = () => {
   return (
@@ -22,6 +23,7 @@ const MainScreen = () => {
           <Router className="main-screen-router">
             <UserHome path="home" />
             <Explore path="explore" />
+            <Profile path=":handle" />
           </Router>
           <div className="main-screen-sidebar-right">
             <WhoToFollow
