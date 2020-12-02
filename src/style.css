@@ -57,7 +57,7 @@ body {
   flex-flow: column nowrap;
 }
 .main-screen {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -101,6 +101,7 @@ body {
   border-style: solid;
   border-color: #38444d;
   width: 100%;
+  height: 100%;
 }
 .main-screen-sidebar-right {
   width: 350px;
@@ -110,11 +111,13 @@ body {
   padding-top: 10px;
   margin-right: 10px;
 }
-.user-home {
+.user-home,
+.profile {
   display: flex;
   flex-flow: column nowrap;
 }
-.user-home-header {
+.user-home-header,
+.profile-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -124,11 +127,131 @@ body {
   border-color: #38444d;
   padding: 0px 15px;
   height: 53px;
+  background: #15202b;
+  position: sticky;
+  top: 0;
 }
 .user-home h2 {
   margin: 0;
   font-size: 19px;
   font-weight: 800;
+}
+.profile-header .btn-wrapper {
+  min-width: 59px;
+  min-height: 30px;
+}
+.profile-header .btn-wrapper a {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.profile-header svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.profile-header-content {
+  display: flex;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+.profile-header-content h2,
+.profile-header-content p {
+  margin: 0;
+}
+.profile-header-content h2 {
+  font-weight: 800;
+  font-size: 19px;
+}
+.profile-header-content p {
+  font-size: 13px;
+  color: #8899a6;
+}
+.profile-header-content a {
+  width: 39px;
+  height: 39px;
+}
+.profile-content {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.profile-user {
+  padding: 10px 15px 30px 15px;
+  border-bottom: 1px solid #38444d;
+}
+.profile .row {
+  justify-content: space-between;
+  align-items: center;
+}
+.profile-user .avatar {
+  border: 4px solid #15202b;
+  margin-top: -18%;
+  width: 25%;
+}
+.profile-user .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.profile-user-info {
+  display: flex;
+  flex-flow: column wrap;
+}
+.profile-user-name {
+  margin: 0px;
+  font-size: 19px;
+  font-weight: 800;
+}
+.profile-user-handle {
+  margin: 0px;
+  margin-bottom: 10px;
+  color: #8899a6;
+  font-size: 15px;
+  font-weight: 400;
+}
+.profile-user-bio {
+  margin: 0px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 400;
+}
+.profile-user-info-list {
+  display: flex;
+  flex-flow: row wrap;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.profile-user-info-list li {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  color: #8899a6;
+  line-height: 1.3125;
+}
+.profile-user-info-list li svg {
+  margin-right: 5px;
+  height: 1.25em;
+  fill: currentColor;
+}
+.profile-user-website a {
+  color: rgb(29, 161, 242);
+  text-decoration: none;
+}
+.profile-user-website a:hover,
+.profile-user-website a:focus {
+  text-decoration: underline;
+}
+.profile-user-follow-info {
+  display: flex;
+  color: #8899a6;
+}
+.profile-user-follow-info > span {
+  margin-right: 20px;
+}
+.profile-user-follow-info .count {
+  color: #fff;
+  font-weight: 700;
 }
 main {
   flex: 1 1 0%;
@@ -296,7 +419,6 @@ main {
 }
 .tweet-r {
   flex-basis: 100%;
-  padding-bottom: 10px;
 }
 .tweet-author a,
 .user-card a {
@@ -319,9 +441,6 @@ main {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-}
-.tweet-actions .btn-wrapper {
-  flex-basis: auto;
 }
 .tweet-actions .btn {
   min-width: 39px;
@@ -364,8 +483,9 @@ main {
   flex-flow: column nowrap;
 }
 .new-tweet-editor textarea {
-  border: none;
+  padding-top: 10px;
   background: #15202b;
+  border: none;
   color: #fff;
   font-size: 19px;
   font-weight: 400;
@@ -605,7 +725,7 @@ nav a span {
 .btn--back:focus {
   background-color: rgba(29, 161, 242, 0.1);
 }
-.btn-wrapper {
+.signup-header .btn-wrapper {
   display: flex;
   flex-basis: 50%;
 }
@@ -615,9 +735,22 @@ nav a span {
   border-bottom: 1px solid #38444d;
   background: #192734;
 }
+.avatar {
+  border-radius: 50%;
+  display: flex;
+}
 .avatar img {
   border-radius: 50%;
   height: 49px;
+}
+.banner {
+  display: flex;
+  background-color: #3d5466;
+}
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 footer {
   display: flex;
@@ -733,6 +866,9 @@ footer a:focus {
   }
   .main-screen-content > div:first-child {
     width: 100%;
+  }
+  .main-screen-sidebar-header {
+    width: 68px;
   }
 }
 
