@@ -1,26 +1,6 @@
 import React from "react";
 import { Link } from "@reach/router";
-import Avatar from "./Avatar";
-
-const User = ({ user }) => {
-  const { avatarURL, name, handle } = user;
-  return (
-    <div className="user-card">
-      <div className="user-card-l">
-        <Avatar src={avatarURL} />
-      </div>
-      <div className="user-card-c">
-        <Link to={`/${handle}`}>
-          <span className="user-card-name">{name}</span>
-        </Link>
-        <span className="user-card-handle">{`@${handle}`}</span>
-      </div>
-      <div className="user-card-r">
-        <button className="btn">Follow Me</button>
-      </div>
-    </div>
-  );
-};
+import UserCard from "./UserCard";
 
 const WhoToFollow = ({ users }) => {
   return (
@@ -30,7 +10,7 @@ const WhoToFollow = ({ users }) => {
       </div>
       <div className="who-to-follow-content">
         {users.map((user) => (
-          <User key={user.id} user={user} />
+          <UserCard key={user.id} user={user} />
         ))}
       </div>
       <div className="who-to-follow-footer">
