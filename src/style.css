@@ -873,7 +873,33 @@ footer a:focus {
 }
 
 @media screen and (max-width: 500px) {
+  .main-screen {
+    flex-flow: column nowrap;
+  }
   .main-screen-sidebar {
+    display: flex;
+    order: 1;
+    bottom: 0;
+    position: sticky;
+    flex: 0 1 auto;
+    background: #15202b;
+  }
+  .main-screen-sidebar-header {
+    border-top: 1px solid #38444d;
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+  }
+  .main-screen-sidebar-header > a {
     display: none;
+  }
+  .main-screen-sidebar nav ul {
+    flex-flow: row wrap;
+    width: 100%;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  .main-screen-router {
+    border: 0;
   }
 }
