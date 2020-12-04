@@ -6,16 +6,23 @@ import WhoToFollow from "./WhoToFollow";
 import { TwitterLogo } from "./Icons";
 import Explore from "./Explore";
 import Profile from "./Profile";
+import Bookmarks from "./Bookmarks";
+import SearchInput from "./SearchInput";
+import useInput from "./useInput";
 
 const MainScreen = () => {
+  const searchInput = useInput("");
+
   return (
     <div className="main-screen">
-      <div className="main-screen-sidebar">
-        <div className="main-screen-sidebar-header">
-          <Link className="btn btn--icon" to="home">
-            <TwitterLogo />
-          </Link>
-          <Nav />
+      <div className="sidebar">
+        <div className="sidebar-header-wrapper">
+          <div className="sidebar-header">
+            <Link className="btn btn--icon" to="home">
+              <TwitterLogo />
+            </Link>
+            <Nav />
+          </div>
         </div>
       </div>
       <div className="main-screen-content">
@@ -23,9 +30,15 @@ const MainScreen = () => {
           <Router className="main-screen-router">
             <UserHome path="home" />
             <Explore path="explore" />
+            <Explore path="explore/:q" />
+            <Bookmarks path="bookmarks" />
             <Profile path=":handle" />
           </Router>
-          <div className="main-screen-sidebar-right">
+          <div className="sidebar-right">
+            <SearchInput
+              onChange={searchInput.onChange}
+              value={searchInput.state}
+            />
             <WhoToFollow
               users={[
                 { id: 1, avatarURL: "", name: "Test Test", handle: "test" },
