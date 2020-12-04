@@ -11,14 +11,7 @@ const Modal = ({ children }) => {
     const modalRoot = document.getElementById("modal");
     modalRoot.appendChild(elRef.current);
 
-    document.body.style.overflow = "hidden";
-    document.body.style.marginRight = "12px";
-
-    return () => {
-      modalRoot.removeChild(elRef.current);
-      document.body.style.overflow = "auto scroll";
-      document.body.style.marginRight = "0px";
-    };
+    return () => modalRoot.removeChild(elRef.current);
   }, []);
 
   return createPortal(children, elRef.current);
