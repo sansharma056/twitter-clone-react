@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "@reach/router";
 import Avatar from "./Avatar";
-import { CommentIcon, HeartIcon, RetweetIcon, DeleteIcon } from "./Icons";
+import {
+  CommentIcon,
+  HeartIcon,
+  RetweetIcon,
+  DeleteIcon,
+  AddBookmarkIcon,
+} from "./Icons";
 
 const Tweet = ({ tweetData }) => {
   const { avatarURL, name, handle, timestamp, content, imageURL } = tweetData;
@@ -35,6 +41,11 @@ const Tweet = ({ tweetData }) => {
           <div className="btn-wrapper">
             <button className="btn btn--icon btn--icon--red">
               <HeartIcon />
+            </button>
+          </div>
+          <div className="btn-wrapper">
+            <button className="btn btn--icon">
+              <AddBookmarkIcon />
             </button>
           </div>
           <div className="btn-wrapper">
