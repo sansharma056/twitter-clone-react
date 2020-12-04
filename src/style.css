@@ -17,6 +17,7 @@ body,
 body {
   background: #15202b;
   color: #fff;
+  line-height: 1.3125;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow-y: scroll;
   scrollbar-color: rgb(107, 125, 140) rgb(25, 39, 52);
@@ -62,23 +63,27 @@ body {
   display: flex;
   flex-flow: row nowrap;
 }
-.main-screen-sidebar {
+.sidebar {
   display: flex;
   flex: 1 0 auto;
   flex-flow: column nowrap;
   align-items: flex-end;
 }
-.main-screen-sidebar-header {
+.sidebar-header-wrapper {
+  width: 275px;
+  position: relative;
+}
+.sidebar-header {
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
   padding: 0px 10px;
-  width: 275px;
+  position: fixed;
 }
-.main-screen-sidebar-header > a {
+.sidebar-header > a {
   padding: 10px;
 }
-.main-screen-sidebar svg {
+.sidebar svg {
   height: 2rem;
   color: #fff;
 }
@@ -103,7 +108,7 @@ body {
   width: 100%;
   height: 100%;
 }
-.main-screen-sidebar-right {
+.sidebar-right {
   width: 350px;
   display: flex;
   flex: 0 0 auto;
@@ -111,13 +116,21 @@ body {
   padding-top: 10px;
   margin-right: 10px;
 }
+.sidebar-right .search-input {
+  height: 44px;
+  margin-bottom: 10px;
+}
 .user-home,
-.profile {
+.profile,
+.explore,
+.bookmarks {
   display: flex;
   flex-flow: column nowrap;
 }
 .user-home-header,
-.profile-header {
+.profile-header,
+.explore-header,
+.bookmarks-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -252,6 +265,90 @@ body {
 .profile-user-follow-info .count {
   color: #fff;
   font-weight: 700;
+}
+[class*="explore-search-result"] {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.explore-search-result-alt,
+.bookmarks-content-wrapper {
+  justify-content: center;
+  align-items: center;
+  padding: 39px 20px;
+}
+.explore-search-result-alt h2,
+.bookmarks-content-wrapper h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.explore-search-result-alt p,
+.bookmarks-content-wrapper p {
+  margin: 0;
+  color: #8899a6;
+}
+.bookmarks-header-content {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  justify-content: space-evenly;
+}
+.bookmarks-header h2,
+.bookmarks-header p {
+  margin: 0;
+}
+.bookmarks-header-content h2 {
+  font-weight: 800;
+  font-size: 19px;
+}
+.bookmarks-header-content p {
+  font-size: 13px;
+  color: #8899a6;
+}
+.bookmarks-content {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.bookmarks-content-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.search-input {
+  display: flex;
+  background: #253341;
+  width: 100%;
+  border-radius: 9999px;
+  align-items: center;
+}
+.search-input input:focus {
+  outline: none;
+}
+.search-input:focus-within {
+  background: #15202b;
+  border: 1px solid #1da1f2;
+}
+.search-input:focus-within svg {
+  fill: #1da1f2;
+}
+.search-input:focus-within input {
+  background: #15202b;
+}
+.search-input input {
+  width: 90%;
+  border: none;
+  caret-color: #fff;
+  color: #fff;
+  background: #253341;
+  padding: 5px 10px;
+}
+.search-input input::placeholder {
+  color: #8899a6;
+}
+.search-input svg {
+  height: 1.25em;
+  padding-left: 10px;
+  fill: #8899a6;
 }
 main {
   flex: 1 1 0%;
@@ -436,6 +533,10 @@ main {
 .tweet-author-handle {
   margin-left: 5px;
   color: #8899a6;
+}
+.tweet-text {
+  margin: 0;
+  white-space: break-spaces;
 }
 .tweet-actions {
   display: flex;
@@ -821,13 +922,13 @@ footer a:focus {
 }
 
 @media screen and (max-width: 1275px) {
-  .main-screen-sidebar nav span {
+  .sidebar nav span {
     display: none;
   }
-  .main-screen-sidebar-header {
+  .sidebar-header-wrapper {
     width: 88px;
   }
-  .main-screen-sidebar-header,
+  .sidebar-header,
   nav ul {
     align-items: center;
   }
@@ -837,16 +938,16 @@ footer a:focus {
   .main-screen-content > div:first-child {
     width: 920px;
   }
-  .main-screen-sidebar-right {
+  .sidebar-right {
     width: 290px;
   }
-  .main-screen-sidebar-header {
+  .sidebar-header-wrapper {
     width: 68px;
   }
 }
 
 @media screen and (max-width: 1000px) {
-  .main-screen-sidebar-right {
+  .sidebar-right {
     display: none;
   }
   .main-screen-content {
@@ -855,7 +956,7 @@ footer a:focus {
   .main-screen-content > div:first-child {
     width: 600px;
   }
-  .main-screen-sidebar-header {
+  .sidebar-header-wrapper {
     width: 88px;
   }
 }
@@ -867,7 +968,7 @@ footer a:focus {
   .main-screen-content > div:first-child {
     width: 100%;
   }
-  .main-screen-sidebar-header {
+  .sidebar-header-wrapper {
     width: 68px;
   }
 }
@@ -876,7 +977,7 @@ footer a:focus {
   .main-screen {
     flex-flow: column nowrap;
   }
-  .main-screen-sidebar {
+  .sidebar {
     display: flex;
     order: 1;
     bottom: 0;
@@ -884,16 +985,19 @@ footer a:focus {
     flex: 0 1 auto;
     background: #15202b;
   }
-  .main-screen-sidebar-header {
+  .sidebar-header-wrapper {
+    width: 100%;
+  }
+  .sidebar-header {
     border-top: 1px solid #38444d;
     width: 100%;
     position: sticky;
     bottom: 0;
   }
-  .main-screen-sidebar-header > a {
+  .sidebar-header > a {
     display: none;
   }
-  .main-screen-sidebar nav ul {
+  .sidebar-header nav ul {
     flex-flow: row wrap;
     width: 100%;
     justify-content: space-around;
