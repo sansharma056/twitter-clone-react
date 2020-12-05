@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import SearchInput from "./SearchInput";
 import useInput from "./useInput";
 import Tweet from "./Tweet";
-import UserCard from "./UserCard";
+import UserCardFull from "./UserCardFull";
 
 const Explore = ({ q }) => {
   const searchInput = useInput(q ? q : "");
@@ -18,8 +18,20 @@ const Explore = ({ q }) => {
       },
     ],
     users: [
-      { id: 1, avatarURL: "", name: "Test Test", handle: "test" },
-      { id: 2, avatarURL: "", name: "Test1 Test", handle: "test1" },
+      {
+        id: 1,
+        avatarURL: "",
+        name: "Test Test",
+        handle: "test",
+        bio: "foo foo foo",
+      },
+      {
+        id: 2,
+        avatarURL: "",
+        name: "Test1 Test",
+        handle: "test1",
+        bio: "foo foo foo",
+      },
     ],
   };
 
@@ -42,7 +54,7 @@ const Explore = ({ q }) => {
               <Tweet key={tweet.id} tweetData={tweet} />
             ))}
             {result.users.map((user) => (
-              <UserCard key={user.handle} user={user} />
+              <UserCardFull key={user.handle} user={user} />
             ))}
           </div>
         ) : (
