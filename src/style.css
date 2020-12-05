@@ -518,7 +518,8 @@ main {
   flex-basis: 100%;
 }
 .tweet-author a,
-.user-card a {
+.user-card a,
+.user-card-full a {
   text-decoration: none;
 }
 .tweet-author-name,
@@ -655,7 +656,8 @@ main {
   text-decoration: none;
   color: #1da1f2;
 }
-.user-card {
+.user-card,
+.user-card-full {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -665,17 +667,20 @@ main {
   cursor: pointer;
 }
 .user-card,
+.user-card-full,
 .who-to-follow-footer,
 .tweet {
   transition-duration: 0.2s;
   transition-property: background;
 }
 .user-card:hover,
+.user-card-full:hover,
 .who-to-follow-footer:hover,
 .tweet:hover {
   background: rgb(255, 255, 255, 0.03);
 }
-.user-card-c {
+.user-card-c,
+.user-card-full-c {
   display: flex;
   flex-flow: column nowrap;
 }
@@ -684,6 +689,32 @@ main {
 }
 .user-card-r .btn {
   background: #192734;
+  min-height: 30px;
+}
+.user-card-full {
+  justify-content: stretch;
+}
+.user-card-full-l {
+  flex-basis: 49px;
+  margin-right: 10px;
+}
+.user-card-full-c {
+  flex-grow: 1;
+}
+.user-card-full-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-card-full-header .btn {
+  min-height: 30px;
+}
+.user-card-full-author {
+  display: flex;
+  flex-flow: column wrap;
+}
+.user-card-full-bio {
+  padding-top: 5px;
 }
 nav {
   width: 100%;
