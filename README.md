@@ -5,6 +5,8 @@ My goal is to finish this project by december but judging by my progress so far,
 
 # Updates
 
+**2020/12/07:** At this point, I've made enough progress on the frontend part of this project that I'm willing to start working on the backend. I'll still be adding components here as backend demands.
+
 **2020/12/01:** Just as I predicted this project is still in works. I do believe that I'll complete frontend part of this project in the coming week.
 
 # Screenshots
