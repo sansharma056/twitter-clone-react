@@ -1,14 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
+import useInput from "./useInput";
 import Avatar from "./Avatar";
 import { ImageIcon } from "./Icons";
 
 const NewTweet = ({ avatarURL }) => {
-  const [tweetTextArea, setTweetTextArea] = useState("");
+  const tweet = useInput("");
   const inputFileEl = useRef(null);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(tweetTextArea, inputFileEl.current.files[0]);
+    console.log(tweet, inputFileEl.current.files[0]);
   }
 
   return (
@@ -20,16 +21,21 @@ const NewTweet = ({ avatarURL }) => {
         <form className="new-tweet-form" onSubmit={handleSubmit}>
           <div className="new-tweet-editor">
             <textarea
-              value={tweetTextArea}
+              value={tweet.state}
               placeholder="What's Happening?"
-              onChange={(e) => setTweetTextArea(e.target.value)}
+              onChange={tweet.onChange}
             />
           </div>
           <div className="new-tweet-footer">
             <label htmlFor="file-input" className="btn btn--icon">
               <ImageIcon />
             </label>
-            <input id="file-input" type="file" ref={inputFileEl} />
+            <input
+              id="file-input"
+              type="file"
+              ref={inputFileEl}
+              accept="image/*"
+            />
             <button type="submit" className="btn btn--blue">
               Tweet
             </button>
