@@ -16,7 +16,7 @@ const UserCard = ({ user }) => {
         <span className="user-card-handle">{`@${handle}`}</span>
       </div>
       <div className="user-card-r">
-        <button className="btn">Follow Me</button>
+        <button className="btn">Follow</button>
       </div>
     </div>
   );
