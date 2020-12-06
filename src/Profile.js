@@ -10,8 +10,13 @@ import {
 import Avatar from "./Avatar";
 import Banner from "./Banner";
 import Tweet from "./Tweet";
+import Modal from "./Modal";
+import EditProfile from "./EditProfile";
+import useModal from "./useModal";
 
 const Profile = ({ handle }) => {
+  const { isModalVisible, toggleModal } = useModal(false);
+
   const user = {
     avatarURL: "",
     bannerURL: "",
@@ -57,7 +62,14 @@ const Profile = ({ handle }) => {
         <div className="profile-user">
           <div className="row">
             <Avatar size="medium" />
-            <button className="btn">Edit profile</button>
+            <button className="btn" onClick={toggleModal}>
+              Edit profile
+            </button>
+            {isModalVisible ? (
+              <Modal>
+                <EditProfile onClick={toggleModal} />
+              </Modal>
+            ) : null}
           </div>
           <div className="profile-user-info">
             <h2 className="profile-user-name">{user.name}</h2>
