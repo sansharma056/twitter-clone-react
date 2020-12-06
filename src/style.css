@@ -149,15 +149,18 @@ body {
   font-size: 19px;
   font-weight: 800;
 }
-.profile-header .btn-wrapper {
+.profile-header .btn-wrapper,
+.edit-profile-header .btn-wrapper {
   min-width: 59px;
   min-height: 30px;
 }
-.profile-header .btn-wrapper a {
+.profile-header .btn-wrapper a,
+.edit-profile-header .btn-wrapper a {
   height: 1.5rem;
   width: 1.5rem;
 }
-.profile-header svg {
+.profile-header svg,
+.edit-profile-header svg {
   height: 1.5rem;
   width: 1.5rem;
 }
@@ -199,11 +202,6 @@ body {
   border: 4px solid #15202b;
   margin-top: -18%;
   width: 25%;
-}
-.profile-user .avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 }
 .profile-user-info {
   display: flex;
@@ -265,6 +263,104 @@ body {
 .profile-user-follow-info .count {
   color: #fff;
   font-weight: 700;
+}
+.edit-profile-form {
+  display: flex;
+  flex-flow: column nowrap;
+  background: #15202b;
+  overflow: hidden;
+  min-width: 600px;
+  min-height: 400px;
+  height: 650px;
+  max-width: 80vw;
+  max-height: 90vh;
+  border-radius: 16px;
+  font-size: 19px;
+}
+.edit-profile-header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
+  height: 53px;
+  padding: 0px 15px;
+  border-bottom: 1px solid #38444d;
+}
+.edit-profile-header h2 {
+  font-size: 19px;
+  font-weight: 800;
+  flex-grow: 1;
+}
+.edit-profile-header button {
+  min-height: 30px;
+}
+.edit-profile-content {
+  display: flex;
+  flex-flow: column;
+  overflow: auto;
+  max-width: 600px;
+}
+.edit-profile-content-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-bottom: 59px;
+}
+.avatar-upload-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  width: 25%;
+  max-width: 8rem;
+  margin-top: -3rem;
+  margin-left: 1rem;
+  position: relative;
+}
+.avatar-upload-wrapper .upload-overlay {
+  border-radius: 9999px;
+}
+.banner-upload-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+.edit-profile-content .avatar {
+  border: 4px solid #15202b;
+}
+.edit-profile-content .input-wrapper {
+  padding: 10px 15px;
+}
+.edit-profile-content .input-group {
+  max-width: none;
+}
+.edit-profile-content textarea {
+  height: 88px;
+}
+.upload-overlay {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.upload-group {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.upload-group svg {
+  height: 1.5em;
+  width: 1.5em;
+}
+.upload-group > input {
+  display: none;
 }
 [class*="explore-search-result"] {
   display: flex;
@@ -687,6 +783,12 @@ main {
 .user-card-handle {
   color: #8899a6;
 }
+.user-card-l .avatar img,
+.new-tweet-l .avatar img,
+.tweet-l .avatar img {
+  height: 49px;
+  width: auto;
+}
 .user-card-r .btn {
   background: #192734;
   min-height: 30px;
@@ -780,7 +882,8 @@ nav a span {
 .input-group label:focus-within {
   color: #1da1f2;
 }
-.input-group input {
+.input-group input,
+.input-group textarea {
   background-color: inherit;
   width: 100%;
   caret-color: #fff;
@@ -793,7 +896,8 @@ nav a span {
   box-shadow: none;
   border-color: #e0245e;
 }
-.input-group input:focus {
+.input-group input:focus,
+.input-group textarea:focus {
   outline: none;
   border-color: #1da1f2;
 }
@@ -809,6 +913,7 @@ nav a span {
   min-height: 40px;
   min-width: 40px;
   font-weight: 700;
+  font-size: 15px;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -847,6 +952,12 @@ nav a span {
   border: 0;
   fill: #1da1f2;
 }
+.btn--icon--white {
+  fill: #fff;
+}
+.btn--icon--white:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 .btn--icon--green:hover {
   background-color: rgba(23, 191, 99, 0.4);
 }
@@ -873,7 +984,9 @@ nav a span {
 }
 .avatar img {
   border-radius: 50%;
-  height: 49px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .banner {
   display: flex;
@@ -940,7 +1053,8 @@ footer a:focus {
     justify-content: unset;
     align-items: unset;
   }
-  .signup-form {
+  .signup-form,
+  .edit-profile-form {
     min-width: unset;
     min-height: unset;
     max-width: unset;
@@ -949,6 +1063,10 @@ footer a:focus {
     width: 100vw;
     height: 100vh;
     overflow: scroll;
+  }
+  .edit-profile-content {
+    align-items: center;
+    max-width: unset;
   }
 }
 
