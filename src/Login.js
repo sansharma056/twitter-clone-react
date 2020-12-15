@@ -30,20 +30,24 @@ const Login = () => {
       <form className="login-form" onSubmit={handleForm} noValidate>
         <TwitterLogo />
         <h1>Log in to Twitter Clone</h1>
-        <Input
-          type="email"
-          id="email"
-          labelName="Email"
-          value={email.state}
-          onChange={email.onChange}
-        />
-        <Input
-          type="password"
-          id="password"
-          labelName="Password"
-          value={password.state}
-          onChange={password.onChange}
-        />
+        <div className="input-wrapper">
+          <Input
+            type="email"
+            id="email"
+            labelName="Email"
+            value={email.state}
+            onChange={email.onChange}
+          />
+        </div>
+        <div className="input-wrapper">
+          <Input
+            type="password"
+            id="password"
+            labelName="Password"
+            value={password.state}
+            onChange={password.onChange}
+          />
+        </div>
         <button
           className="btn btn--blue"
           type="submit"

@@ -32,27 +32,33 @@ const Signup = ({ onClick: toggleModal }) => {
         return (
           <>
             <h1>Create your account</h1>
-            <Input
-              type="text"
-              id="name"
-              labelName="Name"
-              value={name.state}
-              onChange={name.onChange}
-            />
-            <Input
-              type="email"
-              id="email"
-              labelName="Email"
-              value={email.state}
-              onChange={email.onChange}
-            />
-            <Input
-              type="date"
-              id="dob"
-              labelName="Date of Birth"
-              value={dob.state}
-              onChange={dob.onChange}
-            />
+            <div className="input-wrapper">
+              <Input
+                type="text"
+                id="name"
+                labelName="Name"
+                value={name.state}
+                onChange={name.onChange}
+              />
+            </div>
+            <div className="input-wrapper">
+              <Input
+                type="email"
+                id="email"
+                labelName="Email"
+                value={email.state}
+                onChange={email.onChange}
+              />
+            </div>
+            <div className="input-wrapper">
+              <Input
+                type="date"
+                id="dob"
+                labelName="Date of Birth"
+                value={dob.state}
+                onChange={dob.onChange}
+              />
+            </div>
           </>
         );
       case 2:
