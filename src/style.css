@@ -549,7 +549,14 @@ main {
   font-size: 23px;
   font-weight: 700;
 }
+.login-form .error-wrapper {
+  margin-bottom: 10px;
+}
+.login-form .error {
+  color: #e0245e;
+}
 .login-form .input-wrapper {
+  padding: 0px 10px;
   margin-bottom: 2rem;
 }
 .login-form .btn {
@@ -862,8 +869,8 @@ nav a span {
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
-  background: #192734;
-  border-radius: 8px;
+  background: #15202b;
+  border-radius: 4px;
   padding-bottom: 5px;
   border: 1px solid #3d5466;
 }
