@@ -552,7 +552,12 @@ main {
 .login-form .error-wrapper {
   margin-bottom: 10px;
 }
-.login-form .error {
+.signup-form .error-wrapper {
+  padding: 0px 5px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.error {
   color: #e0245e;
 }
 .login-form .input-wrapper {
@@ -905,6 +910,15 @@ nav a span {
 .input-group textarea:focus {
   outline: none;
   border-color: #1da1f2;
+}
+.input-group-invalid label,
+.input-group-invalid:focus-within label {
+  color: #e0245e;
+}
+.input-group-invalid,
+.input-group-invalid:focus-within {
+  box-shadow: #e0245e 0px 0px 0px 1px;
+  border-color: #e0245e;
 }
 .btn {
   cursor: pointer;
