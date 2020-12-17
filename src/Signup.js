@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "./Input";
 import useInput from "./useInput";
 import { BackIcon, TwitterLogo } from "./Icons";
+import axios from "axios";
 
 const Signup = ({ onClick: toggleModal }) => {
   const MAX_STEP = 2;
@@ -11,6 +12,7 @@ const Signup = ({ onClick: toggleModal }) => {
   const email = useInput("");
   const dob = useInput("");
   const password = useInput("");
+  const username = useInput("");
 
   function next() {
     if (step < MAX_STEP) updateStep(step + 1);
@@ -22,7 +24,28 @@ const Signup = ({ onClick: toggleModal }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(name.state, email.state, dob.state, password.state);
+    console.log(
+      name.state,
+      username.state,
+      email.state,
+      dob.state,
+      password.state
+    );
+
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/api/signup",
+      data: {
+        name: name.state,
+        screen_name: username.state,
+        email: email.state,
+        dob: dob.state,
+        password: password.state,
+      },
+    }).then((response) => {
+      console.log(response.data.token);
+    });
+
     toggleModal();
   }
 
@@ -39,6 +62,15 @@ const Signup = ({ onClick: toggleModal }) => {
                 labelName="Name"
                 value={name.state}
                 onChange={name.onChange}
+              />
+            </div>
+            <div className="input-wrapper">
+              <Input
+                type="text"
+                id="username"
+                labelName="Username"
+                value={username.state}
+                onChange={username.onChange}
               />
             </div>
             <div className="input-wrapper">
