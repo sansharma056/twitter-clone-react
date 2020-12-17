@@ -3,6 +3,7 @@ import Input from "./Input";
 import useInput from "./useInput";
 import { BackIcon, TwitterLogo } from "./Icons";
 import axios from "axios";
+import validator from "validator";
 
 const Signup = ({ onClick: toggleModal }) => {
   const MAX_STEP = 2;
@@ -45,7 +46,6 @@ const Signup = ({ onClick: toggleModal }) => {
     }).then((response) => {
       console.log(response.data.token);
     });
-
     toggleModal();
   }
 
@@ -62,7 +62,17 @@ const Signup = ({ onClick: toggleModal }) => {
                 labelName="Name"
                 value={name.state}
                 onChange={name.onChange}
+                isInvalid={
+                  validator.isEmpty(name.state, { ignore_whitespace: true }) &&
+                  name.isTouched
+                }
               />
+              {validator.isEmpty(name.state, { ignore_whitespace: true }) &&
+              name.isTouched ? (
+                <div className="error-wrapper">
+                  <span className="error">What&apos;s your name?</span>
+                </div>
+              ) : null}
             </div>
             <div className="input-wrapper">
               <Input
@@ -71,7 +81,18 @@ const Signup = ({ onClick: toggleModal }) => {
                 labelName="Username"
                 value={username.state}
                 onChange={username.onChange}
+                isInvalid={
+                  validator.isEmpty(username.state, {
+                    ignore_whitespace: true,
+                  }) && username.isTouched
+                }
               />
+              {validator.isEmpty(username.state, { ignore_whitespace: true }) &&
+              username.isTouched ? (
+                <div className="error-wrapper">
+                  <span className="error">What&apos;s your username?</span>
+                </div>
+              ) : null}
             </div>
             <div className="input-wrapper">
               <Input
@@ -80,7 +101,13 @@ const Signup = ({ onClick: toggleModal }) => {
                 labelName="Email"
                 value={email.state}
                 onChange={email.onChange}
+                isInvalid={!validator.isEmail(email.state) && email.isTouched}
               />
+              {!validator.isEmail(email.state) && email.isTouched ? (
+                <div className="error-wrapper">
+                  <span className="error">Please enter a valid email.</span>
+                </div>
+              ) : null}
             </div>
             <div className="input-wrapper">
               <Input
@@ -103,7 +130,20 @@ const Signup = ({ onClick: toggleModal }) => {
               labelName="Passsword"
               value={password.state}
               onChange={password.onChange}
+              isInvalid={
+                !validator.isLength(password.state, { min: 8 }) &&
+                password.isTouched
+              }
             />
+            {!validator.isLength(password.state, { min: 8 }) &&
+            password.isTouched ? (
+              <div className="error-wrapper">
+                <span className="error">
+                  Your password needs to be at least 8 characters. Please enter
+                  a longer one.
+                </span>
+              </div>
+            ) : null}
           </>
         );
     }
