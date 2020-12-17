@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Link } from "@reach/router";
+import { Router, Link, useLocation } from "@reach/router";
 import UserHome from "./UserHome";
 import Nav from "./Nav";
 import WhoToFollow from "./WhoToFollow";
@@ -12,6 +12,7 @@ import useInput from "./useInput";
 
 const MainScreen = () => {
   const searchInput = useInput("");
+  const { pathname } = useLocation();
 
   return (
     <div className="main-screen">
@@ -35,10 +36,12 @@ const MainScreen = () => {
             <Profile path=":handle" />
           </Router>
           <div className="sidebar-right">
-            <SearchInput
-              onChange={searchInput.onChange}
-              value={searchInput.state}
-            />
+            {pathname != "/explore" ? (
+              <SearchInput
+                onChange={searchInput.onChange}
+                value={searchInput.state}
+              />
+            ) : null}
             <WhoToFollow
               users={[
                 { id: 1, avatarURL: "", name: "Test Test", handle: "test" },
