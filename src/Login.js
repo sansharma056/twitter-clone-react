@@ -21,19 +21,16 @@ const Login = () => {
   const handleForm = (e) => {
     e.preventDefault();
 
-    if (!email.state || !password.state) {
-      throw new Error("Empty Fields");
-    }
-
     axios({
       method: "POST",
       url: "http://localhost:3000/api/signin",
       data: { email: email.state, password: password.state },
     })
       .then((response) => {
-        authState.signin();
-        console.log(`Bearer ${response.data.token}`);
-        navigate("/home");
+        if (response.status == 201) {
+          authState.signin(response.data.token);
+          navigate("/home");
+        }
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);
