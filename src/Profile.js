@@ -1,5 +1,5 @@
-import { Link } from "@reach/router";
-import React, { useEffect } from "react";
+import { Link, useParams } from "@reach/router";
+import React, { useContext, useEffect, useState } from "react";
 import {
   BackIcon,
   BalloonIcon,
@@ -13,38 +13,44 @@ import Tweet from "./Tweet";
 import Modal from "./Modal";
 import EditProfile from "./EditProfile";
 import useModal from "./useModal";
+import Spinner from "./Spinner";
+import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
-const Profile = ({ handle }) => {
+const Profile = () => {
   const { isModalVisible, toggleModal } = useModal(false);
-
-  const user = {
-    avatarURL: "",
-    bannerURL: "",
-    name: "John Doe",
-    handle: "johndoe",
-    bio: "foo",
-    location: "foo",
-    website: "foo.foo",
-    birthDate: "January 2000",
-    joinDate: "January 2018",
-    followers: 0,
-    following: 0,
-    tweets: [
-      {
-        id: 0,
-        avatarURL: "",
-        name: "John Doe",
-        handle: "johndoe",
-        content: "foo",
-      },
-    ],
-  };
-  // Placeholder, will replace with API call
+  const authState = useContext(AuthContext);
+  const params = useParams();
+  const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = `${user.name} (@${user.handle}) / Twitter Clone`;
+    document.title = `Profile / Twitter Clone`;
   });
-  return (
+
+  useEffect(() => {
+    setLoading(true);
+
+    axios({
+      method: "GET",
+      url: `http://localhost:3000/api/user/${params.screenName}`,
+      headers: { authorization: authState.token },
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          setUser(response.data.user);
+          document.title = `${response.data.user.name} (@${response.data.user.handle}) / Twitter Clone`;
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [params.screenName, authState.token]);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className="profile">
       <div className="profile-header">
         <div className="btn-wrapper">
@@ -53,7 +59,7 @@ const Profile = ({ handle }) => {
           </Link>
         </div>
         <div className="profile-header-content">
-          <h2>{handle}</h2>
+          <h2>{user.handle}</h2>
           <p>{`${user.tweets.length} Tweet`}</p>
         </div>
       </div>
@@ -109,11 +115,11 @@ const Profile = ({ handle }) => {
             </ul>
             <div className="profile-user-follow-info">
               <span>
-                <span className="count">{user.following}</span>
+                <span className="count">{user.following.length}</span>
                 <span> Following</span>
               </span>
               <span>
-                <span className="count">{user.followers}</span>
+                <span className="count">{user.followers.length}</span>
                 <span> Followers</span>
               </span>
             </div>
