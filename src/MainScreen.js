@@ -33,7 +33,7 @@ const MainScreen = () => {
             <Explore path="explore" />
             <Explore path="explore/:q" />
             <Bookmarks path="bookmarks" />
-            <Profile path=":handle" />
+            <Profile path=":screenName" />
           </Router>
           <div className="sidebar-right">
             {pathname != "/explore" ? (
