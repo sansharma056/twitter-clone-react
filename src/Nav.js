@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 import { HomeIcon, HashtagIcon, BookmarkIcon, UserIcon } from "./Icons";
+import { AuthContext } from "./AuthContext";
 
 const Nav = () => {
   const isActive = ({ isCurrent }) => {
     return isCurrent ? { className: "active" } : {};
   };
+
+  const authState = useContext(AuthContext);
 
   return (
     <nav>
@@ -29,7 +32,7 @@ const Nav = () => {
           </Link>
         </li>
         <li>
-          <Link to="/profile" getProps={isActive}>
+          <Link to={`/${authState.screenName}`} getProps={isActive}>
             <UserIcon />
             <span>Profile</span>
           </Link>
