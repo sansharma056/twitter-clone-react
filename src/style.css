@@ -997,6 +997,28 @@ nav a span {
   border-bottom: 1px solid #38444d;
   background: #192734;
 }
+.spinner-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner {
+  width: 26px;
+  height: 26px;
+  animation-name: rotate;
+  animation-duration: 0.75s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .avatar {
   border-radius: 50%;
   display: flex;
