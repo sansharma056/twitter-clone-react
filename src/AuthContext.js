@@ -4,5 +4,5 @@ export const AuthContext = createContext({
   isAuthenticated: false,
   token: null,
   signin: () => {},
-  signup: () => {},
+  signout: () => {},
 });
