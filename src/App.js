@@ -6,21 +6,32 @@ import Home from "./Home";
 import Login from "./Login";
 import MainScreen from "./MainScreen";
 import { AuthContext } from "./AuthContext";
+import jwt_decode from "jwt-decode";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [screenName, setScreenName] = useState(
+    localStorage.getItem("screenName")
+  );
 
   const signin = (token) => {
+    const payload = jwt_decode(token);
+
     setIsAuthenticated(true);
-    setToken(token);
+    setToken(`Bearer ${token}`);
+    setScreenName(payload.screenName);
+
     localStorage.setItem("token", `Bearer ${token}`);
+    localStorage.setItem("screenName", payload.screenName);
   };
 
   const signout = () => {
     setIsAuthenticated(false);
     setToken(null);
+    setScreenName(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("screenName");
   };
 
   return (
@@ -28,6 +39,7 @@ const App = () => {
       value={{
         isAuthenticated,
         token,
+        screenName,
         signin,
         signout,
       }}
