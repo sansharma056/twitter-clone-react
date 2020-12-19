@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Input from "./Input";
 import useInput from "./useInput";
 import { BackIcon, TwitterLogo } from "./Icons";
 import axios from "axios";
 import validator from "validator";
+import { AuthContext } from "./AuthContext";
+import { navigate } from "@reach/router";
 
 const Signup = ({ onClick: toggleModal }) => {
   const MAX_STEP = 2;
@@ -14,6 +16,7 @@ const Signup = ({ onClick: toggleModal }) => {
   const dob = useInput("");
   const password = useInput("");
   const username = useInput("");
+  const authState = useContext(AuthContext);
 
   function next() {
     if (step < MAX_STEP) updateStep(step + 1);
@@ -44,7 +47,11 @@ const Signup = ({ onClick: toggleModal }) => {
         password: password.state,
       },
     }).then((response) => {
-      console.log(response.data.token);
+      if (response.status == 201) {
+        authState.signin();
+        authState.updateToken(response.data.token);
+        navigate("/home");
+      }
     });
     toggleModal();
   }
