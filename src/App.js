@@ -9,20 +9,27 @@ import { AuthContext } from "./AuthContext";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const signin = () => {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  const signin = (token) => {
     setIsAuthenticated(true);
+    setToken(token);
+    localStorage.setItem("token", `Bearer ${token}`);
   };
 
-  const signup = () => {
+  const signout = () => {
     setIsAuthenticated(false);
+    setToken(null);
+    localStorage.removeItem("token");
   };
 
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        token,
         signin,
-        signup,
+        signout,
       }}
     >
       <Router>
