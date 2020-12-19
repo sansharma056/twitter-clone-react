@@ -28,13 +28,6 @@ const Signup = ({ onClick: toggleModal }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(
-      name.state,
-      username.state,
-      email.state,
-      dob.state,
-      password.state
-    );
 
     axios({
       method: "POST",
@@ -43,13 +36,12 @@ const Signup = ({ onClick: toggleModal }) => {
         name: name.state,
         screen_name: username.state,
         email: email.state,
-        dob: dob.state,
+        date_of_birth: dob.state,
         password: password.state,
       },
     }).then((response) => {
       if (response.status == 201) {
-        authState.signin();
-        authState.updateToken(response.data.token);
+        authState.signin(response.data.token);
         navigate("/home");
       }
     });
