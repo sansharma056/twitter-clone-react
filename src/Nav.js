@@ -1,9 +1,19 @@
 import React, { useContext } from "react";
 import { Link } from "@reach/router";
-import { HomeIcon, HashtagIcon, BookmarkIcon, UserIcon } from "./Icons";
+import {
+  HomeIcon,
+  HashtagIcon,
+  BookmarkIcon,
+  UserIcon,
+  LogoutIcon,
+} from "./Icons";
 import { AuthContext } from "./AuthContext";
+import Logout from "./Logout";
+import Modal from "./Modal";
+import useModal from "./useModal";
 
 const Nav = () => {
+  const { isModalVisible, toggleModal } = useModal(false);
   const isActive = ({ isCurrent }) => {
     return isCurrent ? { className: "active" } : {};
   };
@@ -36,6 +46,23 @@ const Nav = () => {
             <UserIcon />
             <span>Profile</span>
           </Link>
+        </li>
+        <li>
+          <Link
+            to="logout"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleModal();
+            }}
+          >
+            <LogoutIcon />
+            <span>Log out</span>
+          </Link>
+          {isModalVisible ? (
+            <Modal>
+              <Logout onClick={toggleModal} />
+            </Modal>
+          ) : null}
         </li>
       </ul>
     </nav>
