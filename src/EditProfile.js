@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { AddCameraIcon, TimesCircle } from "./Icons";
 import { Link } from "@reach/router";
 import Banner from "./Banner";
@@ -6,24 +6,29 @@ import Avatar from "./Avatar";
 import Input from "./Input";
 import Textarea from "./Textarea";
 import useInput from "./useInput";
+import Modal from "./Modal";
+import useModal from "./useModal";
+import EditMedia from "./EditMedia";
 
-const EditProfile = ({ onClick: toggleModal }) => {
-  const user = {
-    name: "John Doe",
-    handle: "johndoe",
-    bio: "foo",
-    location: "foo",
-    website: "foo",
-    dob: "2000-01-01",
-  };
+const EditProfile = ({ user, onClick: toggleModal }) => {
+  const name = useInput(user.name ? user.name : "");
+  const bio = useInput(user.bio ? user.bio : "");
+  const location = useInput(user.location ? user.location : "");
+  const website = useInput(user.website ? user.website : "");
+  const dob = useInput(user.birthDate.split("T")[0]);
+  const [banner, setBanner] = useState(user.bannerURL ? user.bannerURL : "");
+  const [avatar, setAvatar] = useState(user.avatarURL ? user.avatarURL : "");
+  const [aspect, setAspect] = useState(null);
+  const [media, setMedia] = useState(null);
+  const editMediaModal = useModal(false);
 
-  const name = useInput(user.name);
-  const bio = useInput(user.bio);
-  const location = useInput(user.website);
-  const website = useInput(user.website);
-  const dob = useInput(user.dob);
-  const bannerUploadEl = useRef(null);
-  const avtarUploadEl = useRef(null);
+  function readFile(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,8 +38,8 @@ const EditProfile = ({ onClick: toggleModal }) => {
       location.state,
       website.state,
       dob.state,
-      bannerUploadEl.current.files[0],
-      avtarUploadEl.current.files[0]
+      banner,
+      avatar
     );
     toggleModal();
   }
@@ -59,7 +64,7 @@ const EditProfile = ({ onClick: toggleModal }) => {
       <div className="edit-profile-content">
         <div className="edit-profile-content-wrapper">
           <div className="banner-upload-wrapper">
-            <Banner />
+            <Banner src={banner} />
             <div className="upload-overlay"></div>
             <div className="upload-group">
               <label
@@ -71,13 +76,17 @@ const EditProfile = ({ onClick: toggleModal }) => {
               <input
                 id="banner-upload"
                 type="file"
-                ref={bannerUploadEl}
                 accept="image/*"
+                onChange={(e) => {
+                  readFile(e.target.files[0]).then(setMedia);
+                  setAspect(3);
+                  editMediaModal.toggleModal();
+                }}
               />
             </div>
           </div>
           <div className="avatar-upload-wrapper">
-            <Avatar size="medium" />
+            <Avatar size="medium" src={avatar} />
             <div className="upload-overlay"></div>
             <div className="upload-group">
               <label
@@ -89,8 +98,12 @@ const EditProfile = ({ onClick: toggleModal }) => {
               <input
                 id="avatar-upload"
                 type="file"
-                ref={avtarUploadEl}
                 accept="image/*"
+                onChange={(e) => {
+                  readFile(e.target.files[0]).then(setMedia);
+                  setAspect(1);
+                  editMediaModal.toggleModal();
+                }}
               />
             </div>
           </div>
@@ -138,6 +151,16 @@ const EditProfile = ({ onClick: toggleModal }) => {
               onChange={dob.onChange}
             />
           </div>
+          {editMediaModal.isModalVisible ? (
+            <Modal>
+              <EditMedia
+                media={media}
+                aspect={aspect}
+                onClick={editMediaModal.toggleModal}
+                onComplete={aspect === 3 ? setBanner : setAvatar}
+              />
+            </Modal>
+          ) : null}
         </div>
       </div>
     </div>
