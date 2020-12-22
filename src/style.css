@@ -37,6 +37,9 @@ body {
   z-index: 1;
   background: rgba(110, 118, 125, 0.4);
 }
+#modal > div {
+  position: absolute;
+}
 #react-root,
 .home {
   display: flex;
@@ -150,17 +153,20 @@ body {
   font-weight: 800;
 }
 .profile-header .btn-wrapper,
-.edit-profile-header .btn-wrapper {
+.edit-profile-header .btn-wrapper,
+.edit-media-header .btn-wrapper {
   min-width: 59px;
   min-height: 30px;
 }
 .profile-header .btn-wrapper a,
-.edit-profile-header .btn-wrapper a {
+.edit-profile-header .btn-wrapper a,
+.edit-media-header .btn-wrapper a {
   height: 1.5rem;
   width: 1.5rem;
 }
 .profile-header svg,
-.edit-profile-header svg {
+.edit-profile-header svg,
+.edit-media-header svg {
   height: 1.5rem;
   width: 1.5rem;
 }
@@ -189,6 +195,16 @@ body {
 .profile-content {
   display: flex;
   flex-flow: column nowrap;
+}
+.profile-content .error {
+  text-align: center;
+  color: #fff;
+}
+.profile-content .error h2 {
+  font-size: 19px;
+}
+.profile-content .error span {
+  color: #8899a6;
 }
 .profile-user {
   padding: 10px 15px 30px 15px;
@@ -264,7 +280,8 @@ body {
   color: #fff;
   font-weight: 700;
 }
-.edit-profile-form {
+.edit-profile-form,
+.edit-media-form {
   display: flex;
   flex-flow: column nowrap;
   background: #15202b;
@@ -277,7 +294,8 @@ body {
   border-radius: 16px;
   font-size: 19px;
 }
-.edit-profile-header {
+.edit-profile-header,
+.edit-media-header {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -288,15 +306,18 @@ body {
   padding: 0px 15px;
   border-bottom: 1px solid #38444d;
 }
-.edit-profile-header h2 {
+.edit-profile-header h2,
+.edit-media-form h2 {
   font-size: 19px;
   font-weight: 800;
   flex-grow: 1;
 }
-.edit-profile-header button {
+.edit-profile-header button,
+.edit-media-header button {
   min-height: 30px;
 }
-.edit-profile-content {
+.edit-profile-content,
+.edit-media-content {
   display: flex;
   flex-flow: column;
   overflow: auto;
@@ -306,6 +327,29 @@ body {
   display: flex;
   flex-flow: column nowrap;
   padding-bottom: 59px;
+}
+.edit-media-content {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.edit-media-content .cropArea {
+  border: 5px solid #1da1f2;
+}
+.edit-media-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 20px;
+  padding: 5px 0px;
+}
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  height: 39px;
 }
 .avatar-upload-wrapper {
   display: flex;
@@ -606,6 +650,49 @@ main {
 }
 .signup-form .input-wrapper {
   margin-bottom: 2rem;
+}
+.logout {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 660px;
+  background: #15202b;
+  border-radius: 16px;
+  padding: 30px 20px;
+}
+.logout-header {
+  display: flex;
+  justify-content: center;
+}
+.logout-header svg {
+  align-self: center;
+  height: 39px;
+  margin-bottom: 15px;
+}
+.logout-content {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.logout-content h2 {
+  font-size: 19px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.logout-content span {
+  color: #8899a6;
+  margin-bottom: 20px;
+}
+.logout-footer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.logout-footer .btn {
+  flex-grow: 1;
+}
+.logout-footer .btn:first-child {
+  margin-right: 15px;
 }
 .tweet {
   display: flex;
@@ -1032,6 +1119,7 @@ nav a span {
 .banner {
   display: flex;
   background-color: #3d5466;
+  max-width: 600px;
 }
 .banner img {
   width: 100%;
@@ -1090,12 +1178,9 @@ footer a:focus {
 }
 
 @media screen and (max-width: 700px), screen and (max-height: 500px) {
-  #modal {
-    justify-content: unset;
-    align-items: unset;
-  }
   .signup-form,
-  .edit-profile-form {
+  .edit-profile-form,
+  .edit-media-form {
     min-width: unset;
     min-height: unset;
     max-width: unset;
@@ -1105,7 +1190,8 @@ footer a:focus {
     height: 100vh;
     overflow: scroll;
   }
-  .edit-profile-content {
+  .edit-profile-content,
+  .edit-media-content {
     align-items: center;
     max-width: unset;
   }
