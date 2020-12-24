@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { AddCameraIcon, TimesCircle } from "./Icons";
 import { Link } from "@reach/router";
 import Banner from "./Banner";
@@ -9,6 +9,8 @@ import useInput from "./useInput";
 import Modal from "./Modal";
 import useModal from "./useModal";
 import EditMedia from "./EditMedia";
+import { AuthContext } from "./AuthContext";
+import axios from "axios";
 
 const EditProfile = ({ user, onClick: toggleModal }) => {
   const name = useInput(user.name ? user.name : "");
@@ -21,6 +23,7 @@ const EditProfile = ({ user, onClick: toggleModal }) => {
   const [aspect, setAspect] = useState(null);
   const [media, setMedia] = useState(null);
   const editMediaModal = useModal(false);
+  const authState = useContext(AuthContext);
 
   function readFile(file) {
     return new Promise((resolve) => {
@@ -32,15 +35,21 @@ const EditProfile = ({ user, onClick: toggleModal }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(
-      name.state,
-      bio.state,
-      location.state,
-      website.state,
-      dob.state,
-      banner,
-      avatar
-    );
+    axios({
+      method: "PUT",
+      url: `http://localhost:3000/api/user/${authState.screenName}`,
+      headers: { authorization: authState.token },
+      data: {
+        name: name.state,
+        description: bio.state,
+        location: location.state,
+        url: website.state,
+        date_of_birth: dob.state,
+        banner_url: banner,
+        profile_picture_url: avatar,
+      },
+    });
+
     toggleModal();
   }
 
