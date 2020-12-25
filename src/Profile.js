@@ -24,13 +24,16 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const refreshProfile = () => {
+    setLoading(true);
+  };
+
   useEffect(() => {
     document.title = `Profile / Twitter Clone`;
   });
 
   useEffect(() => {
-    setLoading(true);
-
     axios({
       method: "GET",
       url: `http://localhost:3000/api/user/${params.screenName}`,
@@ -51,7 +54,7 @@ const Profile = () => {
           setLoading(false);
         }
       });
-  }, [params.screenName, authState.token]);
+  }, [params.screenName, authState.token, loading]);
 
   return loading ? (
     <Spinner />
@@ -78,7 +81,8 @@ const Profile = () => {
         <Banner src={user.bannerURL} />
         <div className="profile-user">
           <div className="row">
-            <Avatar size="medium" />
+            <Avatar src={user.avatarURL} size="medium" />
+
             {!errorMessage ? (
               <>
                 <button className="btn" onClick={toggleModal}>
@@ -86,7 +90,11 @@ const Profile = () => {
                 </button>
                 {isModalVisible ? (
                   <Modal>
-                    <EditProfile onClick={toggleModal} user={user} />
+                    <EditProfile
+                      onClick={toggleModal}
+                      user={user}
+                      refreshProfile={refreshProfile}
+                    />
                   </Modal>
                 ) : null}
               </>

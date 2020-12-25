@@ -12,7 +12,7 @@ import EditMedia from "./EditMedia";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
 
-const EditProfile = ({ user, onClick: toggleModal }) => {
+const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
   const name = useInput(user.name ? user.name : "");
   const bio = useInput(user.bio ? user.bio : "");
   const location = useInput(user.location ? user.location : "");
@@ -49,7 +49,7 @@ const EditProfile = ({ user, onClick: toggleModal }) => {
         profile_picture_url: avatar,
       },
     });
-
+    refreshProfile();
     toggleModal();
   }
 
