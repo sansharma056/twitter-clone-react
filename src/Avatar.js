@@ -16,8 +16,10 @@ const Avatar = ({ src, size }) => {
   };
 
   return (
-    <div className="avatar">
-      <img src={src ? src : defaultPicSrc(size)} alt="Avatar" />
+    <div className="avatar-wrapper">
+      <div className="avatar">
+        <img src={src ? src : defaultPicSrc(size)} alt="" />
+      </div>
     </div>
   );
 };
