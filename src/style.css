@@ -196,6 +196,9 @@ body {
   display: flex;
   flex-flow: column nowrap;
 }
+.profile-content .banner-wrapper {
+  max-width: 600px;
+}
 .profile-content .error {
   text-align: center;
   color: #fff;
@@ -212,13 +215,16 @@ body {
 }
 .profile .row {
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }
-.profile-user .avatar {
-  border: 4px solid #15202b;
+.profile-user .avatar-wrapper {
+  margin-bottom: -4px;
+  margin-left: -4px;
   margin-top: -18%;
   width: 25%;
+  border: 4px solid #15202b;
 }
+
 .profile-user-info {
   display: flex;
   flex-flow: column wrap;
@@ -360,6 +366,10 @@ body {
   margin-top: -3rem;
   margin-left: 1rem;
   position: relative;
+  border: 4px solid #15202b;
+  background-color: #15202b;
+  border-radius: 9999px;
+  overflow: hidden;
 }
 .avatar-upload-wrapper .upload-overlay {
   border-radius: 9999px;
@@ -368,9 +378,6 @@ body {
   display: flex;
   flex-flow: column nowrap;
   position: relative;
-}
-.edit-profile-content .avatar {
-  border: 4px solid #15202b;
 }
 .edit-profile-content .input-wrapper {
   padding: 10px 15px;
@@ -877,11 +884,10 @@ main {
 .user-card-handle {
   color: #8899a6;
 }
-.user-card-l .avatar img,
-.new-tweet-l .avatar img,
-.tweet-l .avatar img {
-  height: 49px;
-  width: auto;
+.user-card-l .avatar-wrapper,
+.new-tweet-l .avatar-wrapper,
+.tweet-l .avatar-wrapper {
+  width: 49px;
 }
 .user-card-r .btn {
   background: #192734;
@@ -1106,25 +1112,33 @@ nav a span {
     transform: rotate(360deg);
   }
 }
+.avatar-wrapper {
+  overflow: hidden;
+  border-radius: 9999px;
+}
 .avatar {
-  border-radius: 50%;
   display: flex;
+  position: relative;
+  padding-bottom: 100%;
 }
 .avatar img {
-  border-radius: 50%;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  position: absolute;
+  background-color: #15202b;
 }
 .banner {
   display: flex;
-  background-color: #3d5466;
-  max-width: 600px;
+  background: #3d5466;
+  position: relative;
+  padding-bottom: 33.3%;
 }
 .banner img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  position: absolute;
 }
 footer {
   display: flex;
@@ -1177,7 +1191,7 @@ footer a:focus {
   }
 }
 
-@media screen and (max-width: 700px), screen and (max-height: 500px) {
+@media screen and (max-width: 700px) {
   .signup-form,
   .edit-profile-form,
   .edit-media-form {
@@ -1192,7 +1206,6 @@ footer a:focus {
   }
   .edit-profile-content,
   .edit-media-content {
-    align-items: center;
     max-width: unset;
   }
 }
