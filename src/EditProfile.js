@@ -24,6 +24,7 @@ const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
   const [media, setMedia] = useState(null);
   const editMediaModal = useModal(false);
   const authState = useContext(AuthContext);
+  const [saving, setSaving] = useState(false);
 
   function readFile(file) {
     return new Promise((resolve) => {
@@ -33,8 +34,9 @@ const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setSaving(true);
     axios({
       method: "PUT",
       url: `http://localhost:3000/api/user/${authState.screenName}`,
@@ -48,9 +50,17 @@ const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
         banner_url: banner,
         profile_picture_url: avatar,
       },
-    });
-    refreshProfile();
-    toggleModal();
+    })
+      .then((result) => {
+        if (result.status === 200) {
+          setSaving(false);
+          refreshProfile();
+          toggleModal();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -66,8 +76,12 @@ const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
           </Link>
         </div>
         <h2>Edit profile</h2>
-        <button onClick={handleSubmit} className="btn btn--blue">
-          Save
+        <button
+          onClick={handleSubmit}
+          className="btn btn--blue"
+          disabled={saving}
+        >
+          {saving ? "Saving" : "Save"}
         </button>
       </div>
       <div className="edit-profile-content">
