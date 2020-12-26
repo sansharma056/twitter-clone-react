@@ -34,7 +34,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 9999;
   background: rgba(110, 118, 125, 0.4);
 }
 #modal > div {
@@ -145,6 +145,7 @@ body {
   height: 53px;
   background: #15202b;
   position: sticky;
+  z-index: 3;
   top: 0;
 }
 .user-home h2 {
@@ -223,6 +224,7 @@ body {
   margin-top: -18%;
   width: 25%;
   border: 4px solid #15202b;
+  position: relative;
 }
 
 .profile-user-info {
@@ -246,6 +248,7 @@ body {
   margin-bottom: 10px;
   font-size: 15px;
   font-weight: 400;
+  white-space: break-spaces;
 }
 .profile-user-info-list {
   display: flex;
