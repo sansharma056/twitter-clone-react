@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { Link } from "@reach/router";
 import { BackIcon } from "./Icons";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "./utils/getCroppedImage";
+import Slider from "./Slider";
 
 const EditMedia = ({
   onClick: toggleModal,
@@ -29,9 +29,9 @@ const EditMedia = ({
     <div className="edit-media-form">
       <div className="edit-media-header">
         <div className="btn-wrapper">
-          <Link to="" onClick={toggleModal} className="btn btn--icon">
+          <button onClick={toggleModal} className="btn btn--icon">
             <BackIcon />
-          </Link>
+          </button>
         </div>
         <h2>Edit media</h2>
         <button onClick={handleSubmit} className="btn btn--blue">
@@ -53,16 +53,14 @@ const EditMedia = ({
         />
       </div>
       <div className="edit-media-controls">
-        <div className="slider">
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.003}
-            value={zoom}
-            onChange={(e) => setZoom(e.target.value)}
-          />
-        </div>
+        <Slider
+          min={1}
+          max={3}
+          step={0.003}
+          value={zoom}
+          onChange={(e) => setZoom(e.target.value)}
+          showZoomIcons={true}
+        />
       </div>
     </div>
   );
