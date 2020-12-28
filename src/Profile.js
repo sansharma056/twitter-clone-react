@@ -85,9 +85,11 @@ const Profile = () => {
 
             {!errorMessage ? (
               <>
-                <button className="btn" onClick={toggleModal}>
-                  Edit profile
-                </button>
+                {user.isSelf ? (
+                  <button className="btn" onClick={toggleModal}>
+                    Edit profile
+                  </button>
+                ) : null}
                 {isModalVisible ? (
                   <Modal>
                     <EditProfile
