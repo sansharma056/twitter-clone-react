@@ -1,15 +1,23 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import useInput from "./useInput";
 import Avatar from "./Avatar";
-import { ImageIcon } from "./Icons";
+import Media from "./Media";
+import { ImageIcon, TimesCircle } from "./Icons";
+import readFile from "./utils/readFile";
+import Modal from "./Modal";
+import useModal from "./useModal";
+import EditPhoto from "./EditPhoto";
+import getAspectRatio from "./utils/getAspectRatio";
 
 const NewTweet = ({ avatarURL }) => {
   const tweet = useInput("");
-  const inputFileEl = useRef(null);
+  const [photo, setPhoto] = useState(null);
+  const [aspect, setAspect] = useState(null);
+  const { isModalVisible, toggleModal } = useModal(false);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(tweet, inputFileEl.current.files[0]);
+    console.log(tweet, photo);
   }
 
   return (
@@ -22,10 +30,48 @@ const NewTweet = ({ avatarURL }) => {
           <div className="new-tweet-editor">
             <textarea
               value={tweet.state}
-              placeholder="What's Happening?"
+              placeholder="What's happening?"
               onChange={tweet.onChange}
             />
           </div>
+
+          {photo ? (
+            <div className="new-tweet-media">
+              <Media src={photo} />
+              {isModalVisible ? (
+                <Modal>
+                  <EditPhoto
+                    photo={photo}
+                    onClick={toggleModal}
+                    onComplete={setPhoto}
+                    orignalAspectRatio={aspect}
+                  />
+                </Modal>
+              ) : null}
+              <div className="btn-wrapper">
+                <button
+                  className="btn btn--icon btn--icon--black"
+                  onClick={(e) => {
+                    e.preventDefault;
+                    setPhoto(null);
+                  }}
+                >
+                  <TimesCircle />
+                </button>
+              </div>
+              <button
+                className="btn btn--black edit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAspect(getAspectRatio(photo));
+                  toggleModal();
+                }}
+              >
+                Edit
+              </button>
+            </div>
+          ) : null}
+
           <div className="new-tweet-footer">
             <label htmlFor="file-input" className="btn btn--icon">
               <ImageIcon />
@@ -33,8 +79,10 @@ const NewTweet = ({ avatarURL }) => {
             <input
               id="file-input"
               type="file"
-              ref={inputFileEl}
               accept="image/*"
+              onChange={(e) => {
+                readFile(e.target.files[0]).then(setPhoto);
+              }}
             />
             <button type="submit" className="btn btn--blue">
               Tweet
