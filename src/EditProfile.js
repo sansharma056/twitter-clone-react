@@ -11,6 +11,7 @@ import useModal from "./useModal";
 import EditMedia from "./EditMedia";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
+import readFile from "./utils/readFile";
 
 const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
   const name = useInput(user.name ? user.name : "");
@@ -25,14 +26,6 @@ const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
   const editMediaModal = useModal(false);
   const authState = useContext(AuthContext);
   const [saving, setSaving] = useState(false);
-
-  function readFile(file) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result), false);
-      reader.readAsDataURL(file);
-    });
-  }
 
   async function handleSubmit(e) {
     e.preventDefault();
