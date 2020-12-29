@@ -782,6 +782,13 @@ main {
 .user-card-full a {
   text-decoration: none;
 }
+.tweet-author a:focus,
+.user-card a:focus,
+.user-card-full a:focus {
+  color: #fff;
+  outline: none;
+  text-decoration: underline;
+}
 .tweet-author-name,
 .user-card-name {
   color: #fff;
@@ -940,6 +947,12 @@ main {
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
 }
+.who-to-follow-footer:focus-within {
+  box-shadow: #8ed0f9 0px 0px 0px 2px;
+}
+.who-to-follow-footer:focus-within a {
+  outline: none;
+}
 .who-to-follow-footer a {
   text-decoration: none;
   color: #1da1f2;
@@ -1027,6 +1040,12 @@ nav li {
 }
 nav li:hover {
   background: rgb(29, 161, 242, 0.1);
+}
+nav li:focus-within {
+  box-shadow: #8ed0f9 0px 0px 0px 2px;
+}
+nav li:focus-within a {
+  outline: none;
 }
 nav li:hover a,
 .active {
