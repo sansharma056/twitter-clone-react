@@ -168,9 +168,7 @@ const Profile = () => {
         </div>
         {!errorMessage ? (
           !user.tweets.length ? null : (
-            user.tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweetData={tweet} />
-            ))
+            user.tweets.map((tweet) => <Tweet key={tweet} id={tweet} />)
           )
         ) : (
           <div className="error-wrapper">
