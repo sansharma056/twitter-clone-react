@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useInput from "./useInput";
 import Avatar from "./Avatar";
 import Media from "./Media";
@@ -8,16 +8,37 @@ import Modal from "./Modal";
 import useModal from "./useModal";
 import EditPhoto from "./EditPhoto";
 import getAspectRatio from "./utils/getAspectRatio";
+import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
 const NewTweet = ({ avatarURL }) => {
+  const authState = useContext(AuthContext);
   const tweet = useInput("");
   const [photo, setPhoto] = useState(null);
   const [aspect, setAspect] = useState(null);
   const { isModalVisible, toggleModal } = useModal(false);
+  const [tweeting, setTweeting] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(tweet, photo);
+    setTweeting(true);
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/api/tweet/",
+      headers: { authorization: authState.token },
+      data: {
+        text: tweet.state,
+        media: photo,
+      },
+    })
+      .then((result) => {
+        if (result.status === 200) {
+          setTweeting(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -84,8 +105,8 @@ const NewTweet = ({ avatarURL }) => {
                 readFile(e.target.files[0]).then(setPhoto);
               }}
             />
-            <button type="submit" className="btn btn--blue">
-              Tweet
+            <button type="submit" className="btn btn--blue" disabled={tweeting}>
+              {tweeting ? "Tweeting" : "Tweet"}
             </button>
           </div>
         </form>
