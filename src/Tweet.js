@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "@reach/router";
 import Avatar from "./Avatar";
 import {
@@ -8,10 +8,32 @@ import {
   DeleteIcon,
   AddBookmarkIcon,
 } from "./Icons";
+import Media from "./Media";
+import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
-const Tweet = ({ tweetData }) => {
-  const { avatarURL, name, handle, timestamp, content, imageURL } = tweetData;
-  return (
+const Tweet = ({ id }) => {
+  const [loading, setLoading] = useState(true);
+  const [tweet, setTweet] = useState({});
+  const { avatarURL, imageURL, name, handle, content } = tweet;
+  const authState = useContext(AuthContext);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `http://localhost:3000/api/tweet/${id}`,
+      headers: { authorization: authState.token },
+    })
+      .then((result) => {
+        setTweet(result.data.tweet);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id, authState.token]);
+
+  return loading ? null : (
     <div className="tweet">
       <div className="tweet-l">
         <Avatar src={avatarURL} />
@@ -25,7 +47,7 @@ const Tweet = ({ tweetData }) => {
         </div>
         <div className="tweet-content">
           <p className="tweet-text">{content}</p>
-          {imageURL ? <img src={imageURL} alt="Tweet Image" /> : null}
+          {imageURL ? <Media src={imageURL} /> : null}
         </div>
         <div className="tweet-actions">
           <div className="btn-wrapper">
