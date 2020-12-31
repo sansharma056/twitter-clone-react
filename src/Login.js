@@ -20,10 +20,9 @@ const Login = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-
     axios({
       method: "POST",
-      url: "http://localhost:3000/api/signin",
+      url: `${process.env.API_URL}/signin`,
       data: { email: email.state, password: password.state },
     })
       .then((response) => {
