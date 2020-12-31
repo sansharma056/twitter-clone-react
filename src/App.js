@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+
 import React, { useState } from "react";
 import { render } from "react-dom";
 import { Router } from "@reach/router";
@@ -7,6 +9,8 @@ import Login from "./Login";
 import MainScreen from "./MainScreen";
 import { AuthContext } from "./AuthContext";
 import jwt_decode from "jwt-decode";
+
+dotenv.config();
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

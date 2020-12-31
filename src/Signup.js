@@ -31,7 +31,7 @@ const Signup = ({ onClick: toggleModal }) => {
 
     axios({
       method: "POST",
-      url: "http://localhost:3000/api/signup",
+      url: `${process.env.API_URL}/signup`,
       data: {
         name: name.state,
         screen_name: username.state,

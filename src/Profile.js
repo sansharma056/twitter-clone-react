@@ -36,7 +36,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:3000/api/user/${params.screenName}`,
+      url: `${process.env.API_URL}/user/${params.screenName}/`,
       headers: { authorization: authState.token },
     })
       .then((response) => {

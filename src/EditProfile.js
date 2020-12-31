@@ -32,7 +32,7 @@ const EditProfile = ({ user, onClick: toggleModal, refreshProfile }) => {
     setSaving(true);
     axios({
       method: "PUT",
-      url: `http://localhost:3000/api/user/${authState.screenName}`,
+      url: `${process.env.API_URL}/user/${authState.screenName}`,
       headers: { authorization: authState.token },
       data: {
         name: name.state,
