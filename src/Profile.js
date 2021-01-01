@@ -14,8 +14,8 @@ import Modal from "./Modal";
 import EditProfile from "./EditProfile";
 import useModal from "./useModal";
 import Spinner from "./Spinner";
-import axios from "axios";
 import { AuthContext } from "./AuthContext";
+import useAxiosFetch from "./useAxiosFetch";
 
 const Profile = () => {
   const { isModalVisible, toggleModal } = useModal(false);
@@ -33,28 +33,35 @@ const Profile = () => {
     document.title = `Profile / Twitter Clone`;
   });
 
-  useEffect(() => {
-    axios({
+  useAxiosFetch(
+    {
       method: "GET",
       url: `${process.env.API_URL}/user/${params.screenName}/`,
       headers: { authorization: authState.token },
-    })
-      .then((response) => {
+    },
+    {
+      onFetch: function onFetch(response) {
         if (response.status == 200) {
           setErrorMessage("");
           setUser(response.data.user);
           document.title = `${response.data.user.name} (@${response.data.user.handle}) / Twitter Clone`;
           setLoading(false);
         }
-      })
-      .catch((error) => {
+      },
+      onError: function onError(error) {
         if (error.response.status === 404) {
           setErrorMessage(error.response.data.message);
           setUser({});
           setLoading(false);
         }
-      });
-  }, [params.screenName, authState.token, loading]);
+      },
+      onCancel: function onCancel(error) {
+        if (error) {
+          console.log(error);
+        }
+      },
+    }
+  );
 
   return loading ? (
     <Spinner />

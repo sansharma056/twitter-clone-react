@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "@reach/router";
 import Avatar from "./Avatar";
 import {
@@ -9,29 +9,38 @@ import {
   AddBookmarkIcon,
 } from "./Icons";
 import Media from "./Media";
-import axios from "axios";
+import useAxiosFetch from "./useAxiosFetch";
 import { AuthContext } from "./AuthContext";
+import DeleteTweet from "./DeleteTweet";
+import Modal from "./Modal";
+import useModal from "./useModal";
 
 const Tweet = ({ id }) => {
   const [loading, setLoading] = useState(true);
   const [tweet, setTweet] = useState({});
   const { avatarURL, imageURL, name, handle, content } = tweet;
   const authState = useContext(AuthContext);
+  const { isModalVisible, toggleModal } = useModal(false);
 
-  useEffect(() => {
-    axios({
+  useAxiosFetch(
+    {
       method: "GET",
-      url: `http://localhost:3000/api/tweet/${id}`,
+      url: `${process.env.API_URL}/tweet/${id}`,
       headers: { authorization: authState.token },
-    })
-      .then((result) => {
-        setTweet(result.data.tweet);
+    },
+    {
+      onFetch: function onFetch(response) {
+        setTweet(response.data.tweet);
         setLoading(false);
-      })
-      .catch((error) => {
+      },
+      onError: function onError(error) {
         console.log(error);
-      });
-  }, [id, authState.token]);
+      },
+      onCancel: function onCancel(error) {
+        console.log(error);
+      },
+    }
+  );
 
   return loading ? null : (
     <div className="tweet">
@@ -71,9 +80,17 @@ const Tweet = ({ id }) => {
             </button>
           </div>
           <div className="btn-wrapper">
-            <button className="btn btn--icon btn--icon--red">
+            <button
+              className="btn btn--icon btn--icon--red"
+              onClick={toggleModal}
+            >
               <DeleteIcon />
             </button>
+            {isModalVisible ? (
+              <Modal>
+                <DeleteTweet onClick={toggleModal} id={id} />
+              </Modal>
+            ) : null}
           </div>
         </div>
       </div>
