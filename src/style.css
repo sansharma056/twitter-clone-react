@@ -721,7 +721,8 @@ main {
 .signup-form .input-wrapper {
   margin-bottom: 2rem;
 }
-.logout {
+.logout,
+.delete-tweet {
   display: flex;
   flex-flow: column nowrap;
   max-width: 660px;
@@ -729,7 +730,8 @@ main {
   border-radius: 16px;
   padding: 30px 20px;
 }
-.logout-header {
+.logout-header,
+.delete-tweet-header {
   display: flex;
   justify-content: center;
 }
@@ -738,31 +740,46 @@ main {
   height: 39px;
   margin-bottom: 15px;
 }
-.logout-content {
+.logout-content,
+.delete-tweet-content {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 }
-.logout-content h2 {
+.logout-content h2,
+.delete-tweet-content h2 {
   font-size: 19px;
   margin: 0;
   margin-bottom: 10px;
 }
-.logout-content span {
+.logout-content span,
+.delete-tweet-content span {
   color: #8899a6;
   margin-bottom: 20px;
 }
-.logout-footer {
+.logout-footer,
+.delete-tweet-footer {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
 }
-.logout-footer .btn {
+.logout-footer .btn,
+.delete-tweet-footer {
   flex-grow: 1;
 }
-.logout-footer .btn:first-child {
+.logout-footer .btn:first-child,
+.delete-tweet .btn:first-child {
   margin-right: 15px;
+}
+.delete-tweet {
+  width: 320px;
+}
+.delete-tweet-content {
+  text-align: center;
+}
+.delete-tweet-footer > button {
+  flex-grow: 1;
 }
 .tweet {
   display: flex;
@@ -805,6 +822,7 @@ main {
 .tweet-text {
   margin: 0;
   white-space: break-spaces;
+  margin-bottom: 10px;
 }
 .tweet-actions {
   display: flex;
@@ -891,11 +909,6 @@ main {
 .new-tweet-media .btn--icon {
   min-width: 30px;
   min-height: 30px;
-}
-.new-tweet-media .media-wrapper {
-  cursor: pointer;
-  border: 1px solid #38444d;
-  border-radius: 16px;
 }
 .new-tweet-footer {
   display: flex;
@@ -1153,8 +1166,9 @@ nav a span {
   text-decoration: none;
 }
 .btn--blue {
+  border: 1px solid rgba(0, 0, 0, 0);
   background-color: #1da1f2;
-  color: white;
+  color: #fff;
 }
 .btn--blue:hover,
 .btn--blue:focus {
@@ -1168,6 +1182,18 @@ nav a span {
   border: none;
   background-color: #19618f;
   color: #4f7792;
+}
+.btn--red {
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: #e0245e;
+  color: #fff;
+}
+.btn--red:hover,
+.btn--red:focus {
+  background-color: #ca2055;
+}
+.btn--red:focus {
+  box-shadow: #f092af 0px 0px 0px 2px;
 }
 .btn--black {
   border: 1px solid rgba(0, 0, 0, 0);
@@ -1288,6 +1314,9 @@ nav a span {
 .media-wrapper {
   width: 100%;
   overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #38444d;
+  border-radius: 16px;
 }
 .media {
   display: flex;
