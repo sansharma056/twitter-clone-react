@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Link } from "@reach/router";
 import Avatar from "./Avatar";
 import {
@@ -16,33 +16,51 @@ import Modal from "./Modal";
 import useModal from "./useModal";
 
 const Tweet = ({ id }) => {
-  const [loading, setLoading] = useState(true);
-  const [tweet, setTweet] = useState({});
-  const { avatarURL, imageURL, name, handle, content } = tweet;
+  const [state, setState] = useState({
+    tweet: {},
+    loading: true,
+    errorMessage: "",
+  });
+  const { avatarURL, imageURL, name, handle, content } = state.tweet;
   const authState = useContext(AuthContext);
   const { isModalVisible, toggleModal } = useModal(false);
 
-  useAxiosFetch(
-    {
+  const options = useMemo(
+    () => ({
       method: "GET",
       url: `${process.env.API_URL}/tweet/${id}`,
       headers: { authorization: authState.token },
-    },
-    {
-      onFetch: function onFetch(response) {
-        setTweet(response.data.tweet);
-        setLoading(false);
-      },
-      onError: function onError(error) {
-        console.log(error);
-      },
-      onCancel: function onCancel(error) {
-        console.log(error);
-      },
-    }
+    }),
+    [id, authState.token]
   );
 
-  return loading ? null : (
+  const onFetch = useCallback(function onFetch(response) {
+    setState({ tweet: response.data.tweet, loading: false, errorMessage: "" });
+  }, []);
+
+  const onError = useCallback(function onError(error) {
+    if (error.response.status === 404) {
+      setState({
+        tweet: {},
+        loading: false,
+        errorMessage: error.response.data.message,
+      });
+    } else {
+      console.log(error);
+    }
+  }, []);
+
+  const onCancel = useCallback(function onCancel(error) {
+    console.log(error);
+  }, []);
+
+  useAxiosFetch(options, {
+    onFetch,
+    onError,
+    onCancel,
+  });
+
+  return state.loading ? null : !state.errorMessage ? (
     <div className="tweet">
       <div className="tweet-l">
         <Avatar src={avatarURL} />
@@ -95,7 +113,7 @@ const Tweet = ({ id }) => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Tweet;

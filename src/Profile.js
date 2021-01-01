@@ -1,5 +1,5 @@
 import { Link, useParams } from "@reach/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState, useMemo } from "react";
 import {
   BackIcon,
   BalloonIcon,
@@ -21,49 +21,55 @@ const Profile = () => {
   const { isModalVisible, toggleModal } = useModal(false);
   const authState = useContext(AuthContext);
   const params = useParams();
-  const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const refreshProfile = () => {
-    setLoading(true);
-  };
-
-  useEffect(() => {
-    document.title = `Profile / Twitter Clone`;
+  const [state, setState] = useState({
+    user: {},
+    loading: true,
+    errorMessage: "",
   });
 
-  useAxiosFetch(
-    {
+  const update = (user) => {
+    setState({ user });
+  };
+
+  const options = useMemo(
+    () => ({
       method: "GET",
       url: `${process.env.API_URL}/user/${params.screenName}/`,
       headers: { authorization: authState.token },
-    },
-    {
-      onFetch: function onFetch(response) {
-        if (response.status == 200) {
-          setErrorMessage("");
-          setUser(response.data.user);
-          document.title = `${response.data.user.name} (@${response.data.user.handle}) / Twitter Clone`;
-          setLoading(false);
-        }
-      },
-      onError: function onError(error) {
-        if (error.response.status === 404) {
-          setErrorMessage(error.response.data.message);
-          setUser({});
-          setLoading(false);
-        }
-      },
-      onCancel: function onCancel(error) {
-        if (error) {
-          console.log(error);
-        }
-      },
-    }
+    }),
+    [authState.token, params.screenName]
   );
 
-  return loading ? (
+  const onFetch = useCallback(function onFetch(response) {
+    if (response.status === 200) {
+      setState({ user: response.data.user, loading: false, errorMessage: "" });
+      document.title = `${response.data.user.name} (@${response.data.user.handle}) / Twitter Clone`;
+    }
+  }, []);
+
+  const onError = useCallback(function onError(error) {
+    if (error.response.status === 404) {
+      setState({
+        user: {},
+        loading: false,
+        errorMessage: error.response.data.message,
+      });
+    }
+  }, []);
+
+  const onCancel = useCallback(function onCancel(error) {
+    if (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useAxiosFetch(options, {
+    onFetch,
+    onError,
+    onCancel,
+  });
+
+  return state.loading ? (
     <Spinner />
   ) : (
     <div className="profile">
@@ -74,10 +80,10 @@ const Profile = () => {
           </Link>
         </div>
         <div className="profile-header-content">
-          {!errorMessage ? (
+          {!state.errorMessage ? (
             <>
-              <h2>{user.handle}</h2>
-              <p>{`${user.tweets.length} Tweet`}</p>
+              <h2>{state.user.handle}</h2>
+              <p>{`${state.user.tweets.length} Tweet`}</p>
             </>
           ) : (
             <h2>Profile</h2>
@@ -85,14 +91,14 @@ const Profile = () => {
         </div>
       </div>
       <div className="profile-content">
-        <Banner src={user.bannerURL} />
+        <Banner src={state.user.bannerURL} />
         <div className="profile-user">
           <div className="row">
-            <Avatar src={user.avatarURL} size="medium" />
+            <Avatar src={state.user.avatarURL} size="medium" />
 
-            {!errorMessage ? (
+            {!state.errorMessage ? (
               <>
-                {user.isSelf ? (
+                {state.user.isSelf ? (
                   <button className="btn" onClick={toggleModal}>
                     Edit profile
                   </button>
@@ -101,8 +107,8 @@ const Profile = () => {
                   <Modal>
                     <EditProfile
                       onClick={toggleModal}
-                      user={user}
-                      refreshProfile={refreshProfile}
+                      user={state.user}
+                      update={update}
                     />
                   </Modal>
                 ) : null}
@@ -110,60 +116,66 @@ const Profile = () => {
             ) : null}
           </div>
           <div className="profile-user-info">
-            {!errorMessage ? (
+            {!state.errorMessage ? (
               <>
-                <h2 className="profile-user-name">{user.name}</h2>
-                <span className="profile-user-handle">{`@${user.handle}`}</span>
-                <p className="profile-user-bio">{user.bio}</p>
+                <h2 className="profile-user-name">{state.user.name}</h2>
+                <span className="profile-user-handle">{`@${state.user.handle}`}</span>
+                <p className="profile-user-bio">{state.user.bio}</p>
                 <ul className="profile-user-info-list">
-                  {user.location ? (
+                  {state.user.location ? (
                     <li>
                       <MapMarkerIcon />
-                      <span>{user.location}</span>
+                      <span>{state.user.location}</span>
                     </li>
                   ) : null}
-                  {user.website ? (
+                  {state.user.website ? (
                     <li>
                       <LinkIcon />
                       <span className="profile-user-website">
                         <a
-                          href={`http://${user.website}`}
+                          href={`http://${state.user.website}`}
                           target="_blank"
                           rel="noreferrer"
                         >
-                          {user.website}
+                          {state.user.website}
                         </a>
                       </span>
                     </li>
                   ) : null}
-                  {user.birthDate ? (
+                  {state.user.birthDate ? (
                     <li>
                       <BalloonIcon />
                       <span>
-                        {new Date(user.birthDate).toLocaleDateString("en-US", {
-                          month: "short",
-                          year: "numeric",
-                        })}
+                        {new Date(state.user.birthDate).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
                       </span>
                     </li>
                   ) : null}
                   <li>
                     <CalendarIcon />
                     <span>
-                      {new Date(user.joinDate).toLocaleDateString("en-US", {
-                        month: "short",
-                        year: "numeric",
-                      })}
+                      {new Date(state.user.joinDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "short",
+                          year: "numeric",
+                        }
+                      )}
                     </span>
                   </li>
                 </ul>
                 <div className="profile-user-follow-info">
                   <span>
-                    <span className="count">{user.following.length}</span>
+                    <span className="count">{state.user.following.length}</span>
                     <span> Following</span>
                   </span>
                   <span>
-                    <span className="count">{user.followers.length}</span>
+                    <span className="count">{state.user.followers.length}</span>
                     <span> Followers</span>
                   </span>
                 </div>
@@ -173,15 +185,15 @@ const Profile = () => {
             )}
           </div>
         </div>
-        {!errorMessage ? (
-          !user.tweets.length ? null : (
-            user.tweets.map((tweet) => <Tweet key={tweet} id={tweet} />)
+        {!state.errorMessage ? (
+          !state.user.tweets.length ? null : (
+            state.user.tweets.map((tweet) => <Tweet key={tweet} id={tweet} />)
           )
         ) : (
           <div className="error-wrapper">
             <div className="error">
-              <h2>{errorMessage.split("\n")[0]}</h2>
-              <span>{errorMessage.split("\n")[1]}</span>
+              <h2>{state.errorMessage.split("\n")[0]}</h2>
+              <span>{state.errorMessage.split("\n")[1]}</span>
             </div>
           </div>
         )}
