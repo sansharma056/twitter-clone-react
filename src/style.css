@@ -828,24 +828,35 @@ main {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  margin-top: 10px;
 }
-.tweet-actions .btn {
-  min-width: 39px;
-  min-height: 39px;
+.tweet-action {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 }
-.tweet-actions svg {
+.tweet-action .btn {
+  min-width: 34.5px;
+  min-height: 34.5px;
+}
+.tweet-action svg {
   fill: #8899a6;
   height: 1.25rem;
   width: 1.25rem;
 }
-.tweet-actions .btn:hover > svg {
+.tweet-action .btn:hover > svg {
   fill: #1da1f2;
 }
-.tweet-actions .btn--icon--green:hover > svg {
+.tweet-action .btn--icon--green:hover > svg {
   fill: #17bf63;
 }
-.tweet-actions .btn--icon--red:hover > svg {
+.tweet-action .btn--icon--red:hover > svg {
   fill: #e0245e;
+}
+.tweet-action span {
+  padding: 0 10px;
+  min-width: 33px;
 }
 .new-tweet {
   display: flex;
