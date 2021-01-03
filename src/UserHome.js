@@ -10,6 +10,14 @@ const UserHome = () => {
   const [state, setState] = useState({ tweets: [], loading: true });
   const authState = useContext(AuthContext);
 
+  function handleDeleteTweet(deletedId) {
+    setState({ tweets: state.tweets.filter((id) => id != deletedId) });
+  }
+
+  function handleNewTweet(id) {
+    setState({ tweets: [id, ...state.tweets] });
+  }
+
   const options = useMemo(
     () => ({
       method: "GET",
@@ -44,11 +52,13 @@ const UserHome = () => {
       <div className="user-home-header">
         <h2>Home</h2>
       </div>
-      <NewTweet />
+      <NewTweet handleNewTweet={handleNewTweet} />
       <Separator />
       {!state.tweets.length
         ? null
-        : state.tweets.map((id) => <Tweet key={id} id={id} />)}
+        : state.tweets.map((id) => (
+            <Tweet key={id} id={id} onDelete={handleDeleteTweet} />
+          ))}
     </div>
   );
 };

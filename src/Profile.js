@@ -27,7 +27,15 @@ const Profile = () => {
     errorMessage: "",
   });
 
-  const update = (user) => {
+  function handleDeleteTweet(deletedId) {
+    setState({
+      user: {
+        ...state.user,
+        tweets: state.user.tweets.filter((id) => id != deletedId),
+      },
+    });
+  }
+  const updateUser = (user) => {
     setState({ user });
   };
 
@@ -108,7 +116,7 @@ const Profile = () => {
                     <EditProfile
                       onClick={toggleModal}
                       user={state.user}
-                      update={update}
+                      update={updateUser}
                     />
                   </Modal>
                 ) : null}
@@ -187,7 +195,9 @@ const Profile = () => {
         </div>
         {!state.errorMessage ? (
           !state.user.tweets.length ? null : (
-            state.user.tweets.map((tweet) => <Tweet key={tweet} id={tweet} />)
+            state.user.tweets.map((tweet) => (
+              <Tweet key={tweet} id={tweet} onDelete={handleDeleteTweet} />
+            ))
           )
         ) : (
           <div className="error-wrapper">
