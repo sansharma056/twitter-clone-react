@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 
-const DeleteTweet = ({ onClick: toggleModal, id }) => {
+const DeleteTweet = ({ onClick: toggleModal, id, onDelete }) => {
   const authState = useContext(AuthContext);
   const [deleting, setDeleting] = useState(false);
 
@@ -12,9 +12,15 @@ const DeleteTweet = ({ onClick: toggleModal, id }) => {
       method: "DELETE",
       url: `${process.env.API_URL}/tweet/${id}`,
       headers: { authorization: authState.token },
-    }).catch((error) => {
-      console.log(error);
-    });
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          onDelete(response.data.id);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setDeleting(false);
     toggleModal();
   }
