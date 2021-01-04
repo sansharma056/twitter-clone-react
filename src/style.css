@@ -836,6 +836,15 @@ main {
   justify-content: center;
   align-items: center;
 }
+.tweet-action.reply {
+  color: #17bf63;
+}
+.tweet-action.favorite {
+  color: #e0245e;
+}
+.tweet-action.retweet {
+  color: #17bf63;
+}
 .tweet-action .btn {
   min-width: 34.5px;
   min-height: 34.5px;
@@ -854,9 +863,20 @@ main {
 .tweet-action .btn--icon--red:hover > svg {
   fill: #e0245e;
 }
+.tweet-action .active {
+  color: inherit;
+}
+.tweet-action .btn--icon.active > svg {
+  fill: currentColor;
+}
 .tweet-action span {
   padding: 0 10px;
   min-width: 33px;
+  color: #8899a6;
+}
+.tweet-action:hover span,
+.tweet-action span.active {
+  color: inherit;
 }
 .new-tweet {
   display: flex;
@@ -1072,11 +1092,11 @@ nav li:focus-within a {
   outline: none;
 }
 nav li:hover a,
-.active {
+nav .active {
   color: #1da1f2;
 }
 nav li:hover svg,
-.active svg {
+nav .active svg {
   fill: #1da1f2;
 }
 nav li a {
