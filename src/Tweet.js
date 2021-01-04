@@ -7,6 +7,8 @@ import {
   RetweetIcon,
   DeleteIcon,
   AddBookmarkIcon,
+  HeartSolidIcon,
+  RetweetSolidIcon,
 } from "./Icons";
 import Media from "./Media";
 import useAxiosFetch from "./useAxiosFetch";
@@ -14,6 +16,7 @@ import { AuthContext } from "./AuthContext";
 import DeleteTweet from "./DeleteTweet";
 import Modal from "./Modal";
 import useModal from "./useModal";
+import axios from "axios";
 
 const Tweet = ({ id, onDelete }) => {
   const [state, setState] = useState({
@@ -30,6 +33,8 @@ const Tweet = ({ id, onDelete }) => {
     statuesCount,
     retweetCount,
     favoritesCount,
+    retweeted,
+    favorited,
   } = state.tweet;
   const authState = useContext(AuthContext);
   const { isModalVisible, toggleModal } = useModal(false);
@@ -69,6 +74,55 @@ const Tweet = ({ id, onDelete }) => {
     onCancel,
   });
 
+  const handleFavorite = (event) => {
+    if (favorited) {
+      axios({
+        method: "DELETE",
+        url: `${process.env.API_URL}/tweet/${id}/favorite`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState((state) => ({
+              ...state,
+              tweet: {
+                ...state.tweet,
+                favorited: false,
+                favoritesCount: state.tweet.favoritesCount - 1,
+              },
+            }));
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios({
+        method: "POST",
+        url: `${process.env.API_URL}/tweet/${id}/favorite`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState((state) => ({
+              ...state,
+              tweet: {
+                ...state.tweet,
+                favorited: true,
+                favoritesCount: favoritesCount + 1,
+              },
+            }));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    event.currentTarget.blur();
+  };
+
   return state.loading ? null : !state.errorMessage ? (
     <div className="tweet">
       <div className="tweet-l">
@@ -94,19 +148,28 @@ const Tweet = ({ id, onDelete }) => {
               {statuesCount ? statuesCount : null}
             </span>
           </div>
-          <div className="tweet-action">
-            <button className="btn btn--icon btn--icon--green">
-              <RetweetIcon />
+          <div className="tweet-action retweet">
+            <button
+              className={`btn btn--icon btn--icon--green ${
+                retweeted ? "active" : ""
+              }`}
+            >
+              {retweeted ? <RetweetSolidIcon /> : <RetweetIcon />}
             </button>
             <span className="tweet-metric">
               {retweetCount ? retweetCount : null}
             </span>
           </div>
-          <div className="tweet-action">
-            <button className="btn btn--icon btn--icon--red">
-              <HeartIcon />
+          <div className="tweet-action favorite">
+            <button
+              className={`btn btn--icon btn--icon--red ${
+                favorited ? "active" : ""
+              }`}
+              onClick={handleFavorite}
+            >
+              {favorited ? <HeartSolidIcon /> : <HeartIcon />}
             </button>
-            <span className="tweet-metric">
+            <span className={`tweet-metric ${favorited ? "active" : ""}`}>
               {favoritesCount ? favoritesCount : null}
             </span>
           </div>
