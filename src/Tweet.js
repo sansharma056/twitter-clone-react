@@ -123,6 +123,55 @@ const Tweet = ({ id, onDelete }) => {
     event.currentTarget.blur();
   };
 
+  const handleRetweet = (event) => {
+    if (retweeted) {
+      axios({
+        method: "DELETE",
+        url: `${process.env.API_URL}/tweet/${id}/retweet`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState((state) => ({
+              ...state,
+              tweet: {
+                ...state.tweet,
+                retweeted: false,
+                retweetCount: state.tweet.retweetCount - 1,
+              },
+            }));
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios({
+        method: "POST",
+        url: `${process.env.API_URL}/tweet/${id}/retweet`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState((state) => ({
+              ...state,
+              tweet: {
+                ...state.tweet,
+                retweeted: true,
+                retweetCount: retweetCount + 1,
+              },
+            }));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    event.currentTarget.blur();
+  };
+
   return state.loading ? null : !state.errorMessage ? (
     <div className="tweet">
       <div className="tweet-l">
@@ -153,10 +202,11 @@ const Tweet = ({ id, onDelete }) => {
               className={`btn btn--icon btn--icon--green ${
                 retweeted ? "active" : ""
               }`}
+              onClick={handleRetweet}
             >
               {retweeted ? <RetweetSolidIcon /> : <RetweetIcon />}
             </button>
-            <span className="tweet-metric">
+            <span className={`tweet-metric ${retweeted ? "active" : ""}`}>
               {retweetCount ? retweetCount : null}
             </span>
           </div>
