@@ -35,6 +35,7 @@ const Tweet = ({ id, onDelete }) => {
     favoritesCount,
     retweeted,
     favorited,
+    isSelf,
   } = state.tweet;
   const authState = useContext(AuthContext);
   const { isModalVisible, toggleModal } = useModal(false);
@@ -78,7 +79,7 @@ const Tweet = ({ id, onDelete }) => {
     if (favorited) {
       axios({
         method: "DELETE",
-        url: `${process.env.API_URL}/tweet/${id}/favorite`,
+        url: `${process.env.API_URL}/tweet/${state.tweet.id}/favorite`,
         headers: {
           Authorization: authState.token,
         },
@@ -99,7 +100,7 @@ const Tweet = ({ id, onDelete }) => {
     } else {
       axios({
         method: "POST",
-        url: `${process.env.API_URL}/tweet/${id}/favorite`,
+        url: `${process.env.API_URL}/tweet/${state.tweet.id}/favorite`,
         headers: {
           Authorization: authState.token,
         },
@@ -127,7 +128,7 @@ const Tweet = ({ id, onDelete }) => {
     if (retweeted) {
       axios({
         method: "DELETE",
-        url: `${process.env.API_URL}/tweet/${id}/retweet`,
+        url: `${process.env.API_URL}/tweet/${state.tweet.id}/retweet`,
         headers: {
           Authorization: authState.token,
         },
@@ -148,7 +149,7 @@ const Tweet = ({ id, onDelete }) => {
     } else {
       axios({
         method: "POST",
-        url: `${process.env.API_URL}/tweet/${id}/retweet`,
+        url: `${process.env.API_URL}/tweet/${state.tweet.id}/retweet`,
         headers: {
           Authorization: authState.token,
         },
@@ -228,23 +229,26 @@ const Tweet = ({ id, onDelete }) => {
               <AddBookmarkIcon />
             </button>
           </div>
-          <div className="tweet-action">
-            <button
-              className="btn btn--icon btn--icon--red"
-              onClick={toggleModal}
-            >
-              <DeleteIcon />
-            </button>
-            {isModalVisible ? (
-              <Modal>
-                <DeleteTweet
-                  onClick={toggleModal}
-                  id={id}
-                  onDelete={onDelete}
-                />
-              </Modal>
-            ) : null}
-          </div>
+
+          {isSelf ? (
+            <div className="tweet-action">
+              <button
+                className="btn btn--icon btn--icon--red"
+                onClick={toggleModal}
+              >
+                <DeleteIcon />
+              </button>
+              {isModalVisible ? (
+                <Modal>
+                  <DeleteTweet
+                    onClick={toggleModal}
+                    id={id}
+                    onDelete={onDelete}
+                  />
+                </Modal>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
