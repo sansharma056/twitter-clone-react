@@ -11,7 +11,7 @@ import getAspectRatio from "./utils/getAspectRatio";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 
-const NewTweet = ({ avatarURL }) => {
+const NewTweet = ({ avatarURL, handleNewTweet }) => {
   const authState = useContext(AuthContext);
   const tweet = useInput("");
   const [photo, setPhoto] = useState(null);
@@ -24,16 +24,20 @@ const NewTweet = ({ avatarURL }) => {
     setTweeting(true);
     axios({
       method: "POST",
-      url: "http://localhost:3000/api/tweet/",
+      url: `${process.env.API_URL}/tweet/`,
       headers: { authorization: authState.token },
       data: {
         text: tweet.state,
         media: photo,
       },
     })
-      .then((result) => {
-        if (result.status === 200) {
+      .then((response) => {
+        if (response.status === 200) {
+          tweet.setState("");
+          setPhoto(null);
+          setAspect(null);
           setTweeting(false);
+          handleNewTweet(response.data.id);
         }
       })
       .catch((error) => {
