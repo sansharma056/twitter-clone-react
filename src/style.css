@@ -1189,12 +1189,21 @@ nav a span {
 .btn:focus {
   background-color: rgba(29, 161, 242, 0.1);
 }
-.btn:focus {
+.btn:focus-within {
   outline: none;
   box-shadow: #8ed0f9 0px 0px 0px 2px;
 }
 .btn:visited {
   text-decoration: none;
+}
+.btn--follow:after {
+  content: "Following";
+}
+.btn--follow:hover {
+  background: #ca2055 !important;
+}
+.btn--follow:hover:after {
+  content: "Unfollow";
 }
 .btn--blue {
   border: 1px solid rgba(0, 0, 0, 0);

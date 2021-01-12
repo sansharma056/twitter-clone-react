@@ -16,6 +16,7 @@ import useModal from "./useModal";
 import Spinner from "./Spinner";
 import { AuthContext } from "./AuthContext";
 import useAxiosFetch from "./useAxiosFetch";
+import axios from "axios";
 
 const Profile = () => {
   const { isModalVisible, toggleModal } = useModal(false);
@@ -26,6 +27,52 @@ const Profile = () => {
     loading: true,
     errorMessage: "",
   });
+
+  function handleFollow() {
+    if (state.user.following) {
+      axios({
+        method: "DELETE",
+        url: `${process.env.API_URL}/user/${params.screenName}/follow`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState({
+              ...state,
+              user: {
+                ...state.user,
+                following: false,
+                followersCount: state.user.followersCount - 1,
+              },
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios({
+        method: "POST",
+        url: `${process.env.API_URL}/user/${params.screenName}/follow`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState({
+              ...state,
+              user: {
+                ...state.user,
+                following: true,
+                followersCount: state.user.followersCount + 1,
+              },
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }
 
   function handleDeleteTweet(deletedId) {
     setState({
@@ -110,7 +157,16 @@ const Profile = () => {
                   <button className="btn" onClick={toggleModal}>
                     Edit profile
                   </button>
-                ) : null}
+                ) : state.user.following ? (
+                  <button
+                    className="btn btn--blue btn--follow"
+                    onClick={handleFollow}
+                  ></button>
+                ) : (
+                  <button className="btn" onClick={handleFollow}>
+                    Follow
+                  </button>
+                )}
                 {isModalVisible ? (
                   <Modal>
                     <EditProfile
@@ -179,11 +235,11 @@ const Profile = () => {
                 </ul>
                 <div className="profile-user-follow-info">
                   <span>
-                    <span className="count">{state.user.following.length}</span>
+                    <span className="count">{state.user.followingCount}</span>
                     <span> Following</span>
                   </span>
                   <span>
-                    <span className="count">{state.user.followers.length}</span>
+                    <span className="count">{state.user.followersCount}</span>
                     <span> Followers</span>
                   </span>
                 </div>
