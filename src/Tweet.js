@@ -35,6 +35,7 @@ const Tweet = ({ id, onDelete }) => {
     favoritesCount,
     retweeted,
     favorited,
+    bookmarked,
     isSelf,
   } = state.tweet;
   const authState = useContext(AuthContext);
@@ -173,6 +174,53 @@ const Tweet = ({ id, onDelete }) => {
     event.currentTarget.blur();
   };
 
+  const handleBookmark = (event) => {
+    if (bookmarked) {
+      axios({
+        method: "DELETE",
+        url: `${process.env.API_URL}/tweet/${state.tweet.id}/bookmark`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState((state) => ({
+              ...state,
+              tweet: {
+                ...state.tweet,
+                bookmarked: false,
+              },
+            }));
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios({
+        method: "POST",
+        url: `${process.env.API_URL}/tweet/${state.tweet.id}/bookmark`,
+        headers: {
+          Authorization: authState.token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setState((state) => ({
+              ...state,
+              tweet: {
+                ...state.tweet,
+                bookmarked: true,
+              },
+            }));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    event.currentTarget.blur();
+  };
+
   return state.loading ? null : !state.errorMessage ? (
     <div className="tweet">
       <div className="tweet-l">
@@ -225,7 +273,10 @@ const Tweet = ({ id, onDelete }) => {
             </span>
           </div>
           <div className="tweet-action">
-            <button className="btn btn--icon">
+            <button
+              className={`btn btn--icon ${bookmarked ? "active" : ""}`}
+              onClick={handleBookmark}
+            >
               <AddBookmarkIcon />
             </button>
           </div>
@@ -242,7 +293,7 @@ const Tweet = ({ id, onDelete }) => {
                 <Modal>
                   <DeleteTweet
                     onClick={toggleModal}
-                    id={id}
+                    id={state.tweet.id}
                     onDelete={onDelete}
                   />
                 </Modal>
