@@ -6,15 +6,24 @@ import Modal from "./Modal";
 import useModal from "./useModal";
 import Signup from "./Signup";
 import { AuthContext } from "./AuthContext";
-import { useNavigate } from "@reach/router";
+import { useNavigate, useLocation } from "@reach/router";
 import axios from "axios";
+import { parse } from "query-string";
 
 const Login = () => {
   const { isModalVisible, toggleModal } = useModal(false);
   const email = useInput("");
   const password = useInput("");
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
+  const searchParams = parse(location.search);
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(
+    searchParams.error ? true : false
+  );
+  const [errorMessage, setErrorMessage] = useState(
+    searchParams.error == "true"
+      ? "The username and password you entered did not match our records. Please double-check and try again."
+      : ""
+  );
   const authState = useContext(AuthContext);
   const navigate = useNavigate();
 
