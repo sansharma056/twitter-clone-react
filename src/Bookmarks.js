@@ -8,6 +8,12 @@ const Bookmarks = () => {
   const [state, setState] = useState({ bookmarks: [], loading: true });
   const authState = useContext(AuthContext);
 
+  function handleDeleteTweet(deletedId) {
+    setState({
+      bookmarks: state.bookmarks.filter((id) => id != deletedId),
+    });
+  }
+
   const options = useMemo(
     () => ({
       method: "GET",
@@ -50,7 +56,7 @@ const Bookmarks = () => {
       <div className="bookmarks-content">
         {state.bookmarks.length ? (
           state.bookmarks.map((tweet) => (
-            <Tweet key={tweet} id={tweet} tweetData={tweet} />
+            <Tweet key={tweet} id={tweet} onDelete={handleDeleteTweet} />
           ))
         ) : (
           <div className="bookmarks-content-wrapper">
