@@ -50,7 +50,7 @@ const App = () => {
     >
       <Router>
         <Home path="/" />
-        <Login path="login" />
+        <Login path="login/*" />
         <MainScreen path="/*" />
       </Router>
     </AuthContext.Provider>
