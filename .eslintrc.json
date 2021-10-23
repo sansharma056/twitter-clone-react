@@ -3,6 +3,7 @@
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:react/recommended",
+		"plugin:json/recommended",
     "prettier",
     "prettier/react"
   ],
@@ -12,17 +13,15 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-console": "warn"
   },
-  "parser": "babel-eslint",
   "plugins": ["react", "import", "react-hooks"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "env": {
-    "es6": true,
     "browser": true,
     "node": true
   },
