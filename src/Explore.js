@@ -1,71 +1,57 @@
-import React, { useEffect } from "react";
-import SearchInput from "./SearchInput";
+import React, { useContext, useEffect, useState } from "react";
 import useInput from "./useInput";
-import Tweet from "./Tweet";
+import SearchInput from "./SearchInput";
 import UserCardFull from "./UserCardFull";
+import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
 const Explore = ({ q }) => {
-  const searchInput = useInput(q ? q : "");
-  console.log(q, searchInput.state);
-  const result = {
-    tweets: [
-      {
-        id: 0,
-        avatarURL: "",
-        name: "John Doe",
-        handle: "johndoe",
-        content: "foo",
-      },
-    ],
-    users: [
-      {
-        id: 1,
-        avatarURL: "",
-        name: "Test Test",
-        handle: "test",
-        bio: "foo foo foo",
-      },
-      {
-        id: 2,
-        avatarURL: "",
-        name: "Test1 Test",
-        handle: "test1",
-        bio: "foo foo foo",
-      },
-    ],
-  };
+	const authState = useContext(AuthContext);
+	const [result, setResult] = useState({ users: [], tweets: [] });
+	const searchInput = useInput(q ? q : "");
 
-  useEffect(() => {
-    document.title = "Explore / Twitter Clone";
-  });
+	useEffect(() => {
+		document.title = "Explore / Twitter Clone";
 
-  return (
-    <div className="explore">
-      <div className="explore-header">
-        <SearchInput
-          onChange={searchInput.onChange}
-          value={searchInput.state}
-        />
-      </div>
-      <div className="explore-content">
-        {result ? (
-          <div className="explore-search-result">
-            {result.tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweetData={tweet} />
-            ))}
-            {result.users.map((user) => (
-              <UserCardFull key={user.handle} user={user} />
-            ))}
-          </div>
-        ) : (
-          <div className="explore-search-result-alt">
-            <h2>Try searching for people, topics, or keywords</h2>
-            <p>Your search result will appear here.</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+		if (searchInput.state.length > 0) {
+			axios({
+				method: "GET",
+				url: `${process.env.API_URL}/user/search/${searchInput.state}`,
+				headers: { authorization: authState.token },
+			}).then((response) => {
+				if (response.status == 200) {
+					setResult({...result, users: response.data.users });
+				}
+			});
+		} else {
+			setResult({users: [], tweets: []});
+		}
+	}, [searchInput.state]);
+
+	return (
+		<div className="explore">
+			<div className="explore-header">
+				<SearchInput
+					onChange={searchInput.onChange}
+					value={searchInput.state}
+				/>
+			</div>
+			<div className="explore-content">
+				{result.users.length > 0 ? (
+					<div className="explore-search-result">
+						{result.users.map((user) => (
+							<UserCardFull key={user.handle} user={user} />
+						))}
+					</div>
+				) : (
+					<div className="explore-search-result-alt">
+						<h2>Try searching for people, topics, or keywords</h2>
+						<p>Your search result will appear here.</p>
+					</div>
+				)}
+			</div>
+		</div>
+	);
 };
 
 export default Explore;
